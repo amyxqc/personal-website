@@ -1,0 +1,429 @@
+<!doctype html><html><head<meta name="robots" content="noindex">><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Amy X. Chen · Transit Planning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap">
+<style>
+/* Layout: a one-page fit sheet. A transit-line strip is the section nav; the posting's own
+   requirements sit in a match table up top so a recruiter can verify fit in under a minute. */
+/* Style: AECOM-like corporate. Black hero band, white body, one green accent, heavy grotesque, square corners. */
+:root {
+  --bg: #ffffff;
+  --surface: #f3f3f2;
+  --fg: #111111;
+  --muted: #5c5c5c;
+  --line: #dcdcdc;
+  --route: #00804a;      /* green accent */
+  --route-soft: #e3f3ea;
+  --signal: #00804a;
+  --hero: #0a0a0a;
+  --hero-fg: #ffffff;
+  --hero-muted: #b4b4b4;
+  --hero-accent: #3ddc84;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f0f0f; --surface: #1a1a1a; --fg: #f0f0f0; --muted: #a3a3a3; --line: #2e2e2e;
+    --route: #3ddc84; --route-soft: #12291c; --signal: #3ddc84;
+    --hero: #000000; --hero-fg: #ffffff; --hero-muted: #a8a8a8; --hero-accent: #3ddc84; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f0f0f; --surface: #1a1a1a; --fg: #f0f0f0; --muted: #a3a3a3; --line: #2e2e2e;
+  --route: #3ddc84; --route-soft: #12291c; --signal: #3ddc84;
+  --hero: #000000; --hero-fg: #ffffff; --hero-muted: #a8a8a8; --hero-accent: #3ddc84; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+  padding-inline: 16px; padding-block: 0 64px;
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+a { color: var(--route); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 3px; }
+
+/* ---------- Header ---------- */
+header.top {
+  display: grid; gap: 22px; padding-block: 48px 40px;
+  background: var(--hero); color: var(--hero-fg);
+  box-shadow: 0 0 0 100vmax var(--hero); clip-path: inset(0 -100vmax);
+}
+.eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--hero-muted); display: flex; flex-wrap: wrap; gap: 6px 14px;
+}
+.eyebrow b { color: var(--hero-accent); font-weight: 700; }
+h1 {
+  font-family: var(--font-display); font-weight: 800; font-stretch: 85%; font-size: clamp(46px, 8.5vw, 84px);
+  line-height: .92; margin: 0; letter-spacing: -.02em; text-wrap: balance;
+}
+.pitch { font-size: 18px; max-width: 62ch; margin: 0; color: var(--hero-fg); font-weight: 400; }
+.pitch strong { font-weight: 700; }
+
+.facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0;
+  border-top: 1px solid #3a3a3a;
+}
+.facts div { padding: 14px 16px 0 0; min-width: 0; }
+.facts dt { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--hero-muted); }
+.facts dd { margin: 4px 0 0; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; color: var(--hero-fg); }
+
+.contact { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.chip {
+  display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px;
+  border: 1px solid #4a4a4a; background: transparent; color: var(--hero-fg);
+  font-size: 14px; user-select: all;
+}
+.chip button {
+  font: inherit; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  border: 0; background: var(--hero-accent); color: #000; padding: 3px 8px; cursor: pointer;
+  user-select: none;
+}
+.contact a.chip { text-decoration: none; color: var(--hero-fg); user-select: auto; font-weight: 700; }
+.contact a.chip:hover { border-color: var(--hero-accent); }
+
+/* ---------- Route-strip nav ---------- */
+nav.route {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 14px; margin-bottom: 8px; overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+}
+nav.route ol {
+  list-style: none; margin: 0; padding: 0 4px; display: flex; min-width: max-content;
+  position: relative;
+}
+nav.route ol::before {
+  content: ""; position: absolute; left: 12px; right: 12px; top: 7px; height: 4px;
+  background: var(--route); border-radius: 2px;
+}
+nav.route li { position: relative; padding-right: 34px; }
+nav.route li:last-child { padding-right: 0; }
+nav.route a {
+  display: grid; justify-items: start; gap: 6px; text-decoration: none; color: var(--fg);
+  font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+}
+nav.route a::before {
+  content: ""; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--bg); border: 4px solid var(--route); position: relative; z-index: 1;
+}
+nav.route a:hover::before { background: var(--signal); border-color: var(--signal); }
+
+/* ---------- Sections ---------- */
+section { padding-block: 28px 8px; scroll-margin-top: 70px; }
+h2 {
+  font-family: var(--font-display); font-weight: 800; font-stretch: 90%; font-size: clamp(28px, 4.5vw, 38px);
+  letter-spacing: -.01em; margin: 0 0 6px; line-height: 1.05;
+}
+h2::before {
+  content: attr(data-label); display: block; font-size: 12px; font-weight: 700; font-stretch: 100%;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--route); margin-bottom: 8px;
+}
+.sub { color: var(--muted); margin: 0 0 18px; max-width: 65ch; }
+
+/* Match table */
+.match-wrap { overflow-x: auto; border-top: 3px solid var(--fg); background: var(--bg); }
+table.match { width: 100%; border-collapse: collapse; min-width: 620px; }
+.match th, .match td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.match tr:last-child td { border-bottom: 0; }
+.match thead th {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); background: var(--surface);
+}
+.match td:first-child { width: 34%; font-weight: 700; }
+.match td:first-child small { display: block; font-weight: 700; color: var(--route); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 3px; }
+.match ul { margin: 0; padding-left: 18px; }
+.match li + li { margin-top: 4px; }
+.pin { color: var(--signal); font-weight: 600; }
+
+/* Experience timeline */
+.stops { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.stop { display: grid; grid-template-columns: 28px 1fr; gap: 0 14px; }
+.stop .rail { position: relative; }
+.stop .rail::before { content: ""; position: absolute; left: 11px; top: 0; bottom: 0; width: 4px; background: var(--route); }
+.stop:first-child .rail::before { top: 10px; }
+.stop:last-child .rail::before { bottom: auto; height: 10px; }
+.stop .rail::after {
+  content: ""; position: absolute; left: 3px; top: 4px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--bg); border: 4px solid var(--route); box-sizing: border-box;
+}
+.stop.transfer .rail::after { border-color: var(--signal); background: var(--signal); }
+.stop .body { padding-bottom: 22px; min-width: 0; }
+.stop .head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; align-items: baseline; }
+.stop h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.stop .role { color: var(--muted); font-weight: 500; }
+.stop .when { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stop ul { margin: 8px 0 0; padding-left: 18px; max-width: 72ch; }
+.stop li + li { margin-top: 5px; }
+.tag {
+  display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 7px; background: var(--route-soft); color: var(--route); margin-left: 6px; vertical-align: 2px;
+}
+.tag.hot { background: transparent; border: 1px solid var(--signal); color: var(--signal); }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.skill { background: var(--surface); padding: 18px 18px; min-width: 0; }
+.skill h3 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--route); }
+.skill p { margin: 0; }
+
+/* Education */
+.edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.edu > div { border-top: 3px solid var(--fg); padding-top: 12px; min-width: 0; }
+.edu h3 { margin: 0; font-size: 17px; }
+.edu p { margin: 4px 0 0; color: var(--muted); }
+.edu p.fg { color: var(--fg); }
+
+footer { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+
+@media (max-width: 560px) {
+  .stop .when { white-space: normal; }
+  header.top { padding-block: 28px 18px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow"><span>Application for</span><b>Transit Planning Intern II · AECOM Chicago</b><span>Summer 2027</span></div>
+    <h1>Amy X. Chen</h1>
+    <p class="pitch">Harvard GSD Master in Urban Planning candidate with transit consulting experience. I've benchmarked <strong>10+ aerial tramway systems</strong> for Madrid's transit agency, built <strong>origin–destination flow models</strong> of multimodal transit resilience, and helped build a flood-risk decision-support tool for <strong>Chicago</strong>. I want to help shape high-quality, equitable transit systems in U.S. cities.</p>
+
+    <dl class="facts">
+      <div><dt>Program</dt><dd>Harvard GSD, MUP ’28</dd></div>
+      <div><dt>Undergrad GPA</dt><dd>3.89 / 4.0, Columbia</dd></div>
+      <div><dt>Available</dt><dd>May 2027, in person</dd></div>
+      <div><dt>GIS</dt><dd>ArcGIS Pro · QGIS · PostGIS</dd></div>
+    </dl>
+
+    <div class="contact">
+      <span class="chip"><span id="email">amy_chen@gsd.harvard.edu</span><button type="button" data-copy="email">Copy</button></span>
+      <span class="chip"><span id="phone">+1 (646) 240-5295</span><button type="button" data-copy="phone">Copy</button></span>
+      <a class="chip" href="https://amyxqc.github.io/personal-website/" target="_blank" rel="noopener">Website ↗</a>
+      <a class="chip" href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="chip" href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </header>
+
+  <nav class="route" aria-label="Sections">
+    <ol>
+      <li><a href="#fit">Fit</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+    </ol>
+  </nav>
+
+  <section id="fit">
+    <h2 data-label="Fit">Matched to the posting</h2>
+    <p class="sub">Each row is a responsibility or qualification from the AECOM posting, matched to where I've done it.</p>
+    <div class="match-wrap">
+      <table class="match">
+        <thead><tr><th>AECOM asks for</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><small>Preferred</small>Pursuing an MA/MS in a related field</td>
+            <td><ul><li>Master in Urban Planning, Harvard GSD (May 2028), urban analytics concentration (STEM-designated)</li></ul></td>
+          </tr>
+          <tr>
+            <td><small>Preferred</small>Previous internship experience</td>
+            <td><ul>
+              <li>Mormedi: transit benchmarking for Madrid’s transit agency (client)</li>
+              <li>Block Party: civic AI product work with NYC agencies and city officials</li>
+              <li>Essence Development: NYCHA master campus plan report</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Preferred</small>Transit network concepts; qualitative and quantitative assessment</td>
+            <td><ul>
+              <li>Built origin–destination flow matrices to estimate cross-modal travel demand elasticity and neighborhood rerouting vulnerability</li>
+              <li>Street-network analysis with OSMnx; Urban Infrastructure Systems coursework</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Responsibility</small>Concept-level evaluation of transportation improvement options</td>
+            <td><ul>
+              <li>Compared 10+ aerial tramway systems on cost, ridership, first/last-mile integration and rider experience</li>
+              <li>Developed phased Seattle eVTOL deployment scenarios under regulatory, network and siting constraints</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Responsibility + preferred</small>GIS analysis and detailed maps (ArcGIS Pro, ArcGIS Online)</td>
+            <td><ul>
+              <li>Peer Mapping Assistant, Harvard Center for Geographic Analysis: advise students in ArcGIS Pro and QGIS</li>
+              <li>Advanced GIS coursework; PostGIS geospatial pipelines</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Responsibility</small>Collect statistical data; prepare reports on land use, networks and similar topics</td>
+            <td><ul>
+              <li>Turned 22 years of community board resolutions (4,589) into a validated geospatial dataset</li>
+              <li>Assembled the Fulton &amp; Elliott-Chelsea Houses Master Campus Plan report for NYCHA</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Responsibility + preferred</small>Document and present findings for technical and public audiences</td>
+            <td><ul>
+              <li>Product demos and presentations to mayors, city officials and CIOs</li>
+              <li>Presenting at ACM SIGSPATIAL 2026; presented at the 2026 NYU Urban Systems Symposium</li>
+            </ul></td>
+          </tr>
+          <tr>
+            <td><small>Preferred</small>Awareness of public engagement best practices</td>
+            <td><ul><li>Community Engagement Intern, Essence Development; structured data from community board resolutions</li></ul></td>
+          </tr>
+          <tr>
+            <td><small>Preferred</small>Student organizations</td>
+            <td><ul><li>President, Columbia Architecture Society; Student Services Representative, Columbia College Student Council; GSD Real Estate Club</li></ul></td>
+          </tr>
+          <tr>
+            <td><small>Preferred</small>Microsoft Office</td>
+            <td><ul><li>Excel, Word, PowerPoint; also Adobe Illustrator and InDesign for report graphics</li></ul></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2 data-label="Experience">Internships and research roles</h2>
+    <p class="sub">Most recent first.</p>
+    <ol class="stops">
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Block Party <span class="role">· Product Development Intern, civic AI startup</span></h3><span class="when">May 2026 – Present</span></div>
+          <ul>
+            <li>Lead product demo calls and presentations for public- and private-sector partners, including mayors, city officials and chief information officers at the Harvard Data-Smart Responsive Cities Network sprint and NYC agencies.</li>
+            <li>Independently built an LLM-assisted data pipeline that turned 22 years of Manhattan Community Board 3 resolutions (4,589) into a validated geospatial dataset, with multi-geocoder validation and confidence scoring; scaled to all 59 NYC community boards.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Harvard GSD, Center for Geographic Analysis <span class="role">· Peer Mapping Assistant</span></h3><span class="when">Fall 2026 – Present</span></div>
+          <ul><li>Advise students in ArcGIS Pro and QGIS consultations, troubleshooting mapping, geospatial data and spatial analysis workflows.</li></ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Harvard GSD, Healthy Places Design Lab <span class="role">· Research Assistant</span></h3><span class="when">Sept 2026 – Present</span></div>
+          <ul><li>Lead a literature review and design a database of built-environment proxies for extreme heat vulnerability, feeding decision-support frameworks for planners and public-health stakeholders.</li></ul>
+        </div>
+      </li>
+      <li class="stop transfer">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Mormedi <span class="role">· Business Innovation &amp; Strategy Intern</span><span class="tag hot">Transit</span></h3><span class="when">Jul – Aug 2025</span></div>
+          <ul>
+            <li>Transit planning research for Madrid’s transit agency: benchmarked 10+ aerial tramway systems, with case studies on costs, ridership, first/last-mile integration and rider experience.</li>
+            <li>Modeled travel demand and sized the market for Seattle eVTOL networks, developing phased deployment scenarios under regulatory, network and siting constraints.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Essence Development <span class="role">· Community Engagement Intern</span></h3><span class="when">Spring 2025</span></div>
+          <ul><li>Organized and assembled the Fulton &amp; Elliott-Chelsea Houses Master Campus Plan report for NYCHA, covering phasing, construction staging, resiliency and sustainability, and stakeholder engagement.</li></ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Columbia Climate School <span class="role">· Research Assistant &amp; Curriculum Co-developer</span></h3><span class="when">2023 – 2025</span></div>
+          <ul><li>Researched municipal climate policy for reports presented at COP29 and COP30; co-developed a sustainable cities curriculum on waste infrastructure and implementation economics.</li></ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="projects">
+    <h2 data-label="Projects">Transit and infrastructure research</h2>
+    <p class="sub">Work outside internships.</p>
+    <ol class="stops">
+      <li class="stop transfer">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Multimodal Transit Resilience Under Climate Disruption <span class="role">· Contributing Author</span><span class="tag hot">Transit</span></h3><span class="when">May 2025 – Present</span></div>
+          <ul><li>Built origin–destination flow matrices and used NYC wildfire-haze AQI spikes as a natural experiment to estimate cross-modal travel demand elasticity and neighborhood rerouting vulnerability across the multimodal network.</li></ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>Google OASIS Student Challenge, ACM SIGSPATIAL 2026 <span class="role">· Finalist</span><span class="tag">Chicago</span></h3><span class="when">Aug 2026 – Present</span></div>
+          <ul><li>Drove a team submission outside coursework, building a multi-scale flood-mitigation decision-support tool for Chicago (published in proceedings). Lead expert review calls with practitioners; presenting at ACM SIGSPATIAL in Riverside, CA (Nov 2026) on a Google DeepMind travel grant.</li></ul>
+        </div>
+      </li>
+      <li class="stop">
+        <div class="rail"></div>
+        <div class="body">
+          <div class="head"><h3>2026 NYU Urban Systems Symposium <span class="role">· Presenter</span></h3><span class="when">Sept 2026</span></div>
+          <ul><li>Presented NLP sentiment-analysis research on a century of Lower East Side public housing discourse; published in the proceedings.</li></ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="skills">
+    <h2 data-label="Skills">Tools and methods</h2>
+    <p class="sub">Grouped the way the posting groups them.</p>
+    <div class="skills">
+      <div class="skill"><h3>Transportation</h3><p>Transit planning analysis, travel demand and ridership analysis, origin–destination analysis, network analysis (OSMnx), first/last-mile and multimodal planning, community engagement</p></div>
+      <div class="skill"><h3>GIS &amp; data</h3><p>ArcGIS Pro, QGIS, SQL/PostGIS, Python, R, spatial and time-series econometrics, LLM-based data pipelines</p></div>
+      <div class="skill"><h3>Reports &amp; graphics</h3><p>Excel, Word, PowerPoint, Adobe Illustrator and InDesign, technical writing · Mandarin (native)</p></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2 data-label="Education">Harvard GSD and Columbia</h2>
+    <div class="edu">
+      <div>
+        <h3>Harvard Graduate School of Design</h3>
+        <p class="fg">Master in Urban Planning, urban analytics concentration</p>
+        <p>Expected May 2028 · Cambridge, MA</p>
+        <p>Coursework: Core Urban Planning Studio (energy &amp; ICT infrastructure, Allston), Land Use and Environmental Law, Real Estate Finance</p>
+      </div>
+      <div>
+        <h3>Columbia University</h3>
+        <p class="fg">B.A. Economics and Mathematical Probability · GPA 3.89</p>
+        <p>New York, NY</p>
+        <p>Coursework: Urban Infrastructure Systems, Advanced GIS, Urban Economics, Econometrics</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Amy X. Chen (legal name Xiaoqian Chen) · applying to AECOM Chicago, Transit Planning Intern II</span>
+    <span>Résumé and selected portfolio PDF attached to the application</span>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var el = document.getElementById(btn.getAttribute("data-copy"));
+    var text = el.textContent;
+    var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Selected";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+    };
+    try {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+});
+</script>
+
+</body></html>
