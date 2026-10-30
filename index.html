@@ -103,6 +103,10 @@ section{margin-top:clamp(40px,6vw,80px)}
 .find em{font-style:normal;font-size:13px;color:var(--muted);margin-top:auto}
 .shots{display:grid;gap:10px;margin:0 0 20px}
 .shots img{width:100%;border-radius:16px;display:block;background:var(--surface)}
+.shots figure{margin:0}
+.shots figcaption{padding:7px 2px 0;color:var(--muted);font-size:13px;line-height:1.45}
+.work-gallery+.work-gallery{margin-top:24px}
+.work-gallery h3{margin:0 0 10px;font-size:20px;line-height:1.3;font-weight:500;letter-spacing:-.01em}
 .dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 18px;margin:0 0 18px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .dl dt{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .dl dd{margin:2px 0 0;font-size:14px;line-height:1.45}
@@ -134,6 +138,8 @@ html,body{overflow-x:clip}
 .feat h3{font-weight:400;font-size:clamp(30px,4.4vw,58px);line-height:1.04;letter-spacing:-.03em;margin:0;max-width:20ch;text-wrap:balance}
 .feat .lede{font-size:clamp(17px,1.5vw,19px);line-height:1.55;color:var(--muted);max-width:60ch;margin:18px 0 0}
 .feat .cols{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start;margin-top:26px}
+.skill-chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:20px 0 0}
+.skill-chips li{border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
 .role-box{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:12px}
 .role-box div span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .role-box div{font-size:15px;line-height:1.5}
@@ -264,8 +270,24 @@ html,body{overflow-x:clip}
 </header>
 
 <section id="selected">
-  <div class="sh"><h2>Selected work</h2><p>Four projects that show how I move from a question about a place to a drawing people can act on.</p></div>
+  <div class="sh"><h2>Selected work</h2><p>Recent GIS, geospatial data engineering, geoprocessing and applied AI, alongside the planning work they inform.</p></div>
 </section>
+<article class="feat">
+  <p class="kick">Technical spotlight · Geospatial data engineering · Geoprocessing · 2026</p>
+  <h3>From elevation data to a better planning decision</h3>
+  <p class="lede">A Python pipeline combines open building footprints with municipal LiDAR surface and terrain models to derive heights for 61,228 Auckland buildings, then renders the city in a browser. InfraScope takes a different kind of data—local rules—and connects it with flood, environmental-justice and grid layers so people can test how a proposal changes a permitting path.</p>
+  <div class="flood">
+    <img class="zoom" src="img/g-auckland-3d.jpg" alt="Open-data 3D city model derived from building footprints and municipal LiDAR" data-cap="Open-data 3D city modeling: building heights derived from LiDAR and rendered in a browser.">
+    <img class="zoom" src="img/g-infrascope-screening.jpg" alt="InfraScope data-center approval screening interface" data-cap="InfraScope: a transparent, map-based screen for local data-center rules.">
+  </div>
+  <div class="princ">
+    <div><b>Open-Data 3D City Modeling</b><span>DEM / DSM differencing, building-height extraction and an open-data contribution pipeline for 61,228 buildings.</span><button class="pill ghost" data-open="p1-1">Read the project</button></div>
+    <div><b>InfraScope</b><span>Geoprocess town rules with spatial constraints, show what changes a decision and cite the source behind each result.</span><button class="pill ghost" data-open="p1-4">Read the project</button></div>
+  </div>
+  <ul class="skill-chips" aria-label="Methods highlighted">
+    <li>Python geospatial pipelines</li><li>LiDAR · DEM · DSM</li><li>Raster differencing</li><li>Spatial overlays</li><li>Decision screening</li>
+  </ul>
+</article>
 </div>
 
 <div class="bleed band feat" style="margin-top:12px">
@@ -387,7 +409,7 @@ html,body{overflow-x:clip}
 </section>
 
 <section id="work">
-  <div class="sh"><h2 id="workhead">Index of all work</h2><p>Projects, research, and selected visual work. Open a card for its context, images, and process.</p></div>
+  <div class="sh"><h2 id="workhead">Index of all work</h2><p>Recent spatial analytics, geospatial pipelines and applied-AI projects appear first, followed by earlier research and visual work.</p></div>
   <div class="themes" id="themes"></div>
   <div class="grid" id="grid"></div>
 </section>
@@ -411,7 +433,7 @@ html,body{overflow-x:clip}
 
 <footer>
   <span>Amy X. Chen · amy_chen@gsd.harvard.edu · Hero drawing: Château de Fontainebleau, ink, 2023</span>
-  <span class="l"><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/amyxiaoqianchen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://amyxchen.substack.com/" target="_blank" rel="noopener">Substack</a><a href="https://amyxqc.github.io/data-gallery/" target="_blank" rel="noopener">Previous site</a></span>
+  <span class="l"><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/amyxiaoqianchen/" target="_blank" rel="noopener">LinkedIn</a><a href="https://substack.com/@amychenstudio" target="_blank" rel="noopener">Substack</a><a href="https://amyxqc.github.io/data-gallery/" target="_blank" rel="noopener">Previous site</a></span>
 </footer>
 </div>
 
@@ -478,11 +500,32 @@ WORK.push({
   year:"2020–2021",
   role:"Individual art exhibition project",
   text:"Inspired by Michel Serres’ The Parasite, this body of work considers parasitism as both a biological and a social condition. It draws on the overlapping meanings of host, guest, noise, and interference to question extractive models of development and explore coexistence between people and the earth.",
-  imgs:[
-    "img/parasitism-installation.jpg",
-    "img/parasitism-art-1.jpg",
-    "img/parasitism-art-2.jpg",
-    "img/parasitism-art-3.jpg"
+  imgs:["img/parasitism-exhibition-overview.jpg"],
+  gallerySections:[
+    {title:"UCL portfolio spreads",images:[
+      {src:"img/parasitism-portfolio-spread-01.jpg",alt:"Parasite X triptych and development process portfolio spread",caption:"Parasite X — triptych, research, and development process."},
+      {src:"img/parasitism-portfolio-spread-02.jpg",alt:"The Feast painting and portfolio spread",caption:"The Feast — painting and written interpretation."},
+      {src:"img/parasitism-portfolio-spread-03.jpg",alt:"Brimming Cities architectural model and portfolio spread",caption:"Brimming Cities — model, process, and project notes."},
+      {src:"img/parasitism-portfolio-spread-04.jpg",alt:"Noise sculptural work and process portfolio spread",caption:"Noise — sculpture, material studies, and development."},
+      {src:"img/parasitism-portfolio-spread-05.jpg",alt:"Mutualism model and portfolio spread",caption:"Mutualism — model, material studies, and development."},
+      {src:"img/parasitism-portfolio-spread-06.jpg",alt:"Apocalypse painting and portfolio spread",caption:"Apocalypse — painting and written interpretation."}
+    ]},
+    {title:"Full exhibition",images:[
+      {src:"img/parasitism-exhibition-overview.jpg",alt:"Wide installation view of the Parasitism exhibition",caption:"Installation view with wall works, sculpture, and the Brimming Cities model."},
+      {src:"img/parasitism-exhibition-detail.jpg",alt:"Second installation view of the Parasitism exhibition",caption:"A second view across the exhibition, including the central tower and wall-mounted painting."},
+      {src:"img/parasitism-installation.jpg",alt:"Three Parasite X drawings displayed together",caption:"The Parasite X drawings shown together in the exhibition."}
+    ]},
+    {title:"Individual pieces",images:[
+      {src:"img/parasitism-art-1.jpg",alt:"Parasite X drawing, first view",caption:"Parasite X — drawing 1."},
+      {src:"img/parasitism-art-2.jpg",alt:"Parasite X drawing, second view",caption:"Parasite X — drawing 2."},
+      {src:"img/parasitism-art-3.jpg",alt:"Parasite X drawing, third view",caption:"Parasite X — drawing 3."},
+      {src:"img/parasitism-feast.jpg",alt:"The Feast oil painting, showing a landscape of industrial extraction and animal remains",caption:"The Feast — painting."},
+      {src:"img/parasitism-brimming-cities.jpg",alt:"Brimming Cities model",caption:"Brimming Cities — model."},
+      {src:"img/parasitism-mutualism-model.jpg",alt:"Mutualism architectural model shown from multiple angles",caption:"Mutualism — model."},
+      {src:"img/parasitism-noise.jpg",alt:"Noise sculptural work",caption:"Noise — sculptural work."},
+      {src:"img/parasitism-noise-detail.jpg",alt:"Detail of the Noise sculpture",caption:"Noise — detail."},
+      {src:"img/parasitism-apocalypse.jpg",alt:"Apocalypse painting",caption:"Apocalypse — painting."}
+    ]}
   ],
   links:[],
   themes:["Fine art"],
@@ -508,57 +551,45 @@ WORK.push({
   role:"Individual artwork",
   text:"A three-canvas oil triptych focused on the everyday infrastructure of buildings: pipes, service walls, and the spaces between them.",
   imgs:[
+    "img/urban-guerrilla-triptych-view-1.jpg",
+    "img/urban-guerrilla-triptych-view-2.jpg",
     "img/urban-guerrilla-1.jpg",
     "img/urban-guerrilla-2.jpg",
     "img/urban-guerrilla-3.jpg"
+  ],
+  gallerySections:[
+    {title:"Triptych views",images:[
+      {src:"img/urban-guerrilla-triptych-view-1.jpg",alt:"Urban Guerrilla oil triptych, close installation view",caption:"The three canvases together, viewed closely."},
+      {src:"img/urban-guerrilla-triptych-view-2.jpg",alt:"Urban Guerrilla oil triptych displayed together",caption:"The complete triptych displayed as one work."}
+    ]},
+    {title:"Individual panels",images:[
+      {src:"img/urban-guerrilla-1.jpg",alt:"Urban Guerrilla triptych, left panel",caption:"Left panel."},
+      {src:"img/urban-guerrilla-2.jpg",alt:"Urban Guerrilla triptych, center panel",caption:"Center panel."},
+      {src:"img/urban-guerrilla-3.jpg",alt:"Urban Guerrilla triptych, right panel",caption:"Right panel."}
+    ]}
   ],
   links:[],
   themes:["Fine art"]
 });
 WORK.push({
-  id:"parasitism-noise",
+  id:"other-pages-canvases",
   city:"auckland",
-  num:"A4",
-  title:"Noise",
-  sub:"A sculptural study of disruption and new equilibrium",
-  meta:{Type:"Individual work",Medium:"Foam, wood, 3D-printed and drawn elements",Date:"2020–2021"},
-  year:"2020–2021",
+  num:"6.2",
+  title:"Other Pages & Canvases",
+  sub:"Studies and paintings · 2020–2024",
+  meta:{Type:"Individual visual work",Medium:"Charcoal, markers, oil pastel, acrylic, and oil paint",Date:"2020–2024"},
+  year:"2020–2024",
   role:"Individual artwork",
-  text:"An expanding sculptural form treats noise as an interruption in a parasitic system: a disturbance that accumulates, erupts, and forces a new equilibrium. Made for the Parasitism exhibition.",
-  imgs:["img/parasitism-noise.jpg","img/parasitism-noise-detail.jpg"],
+  text:"A selection of exploratory drawings and paintings from a thousand creative possibilities: a character-and-city illustration, a charcoal woodland study, a street scene, and a café painting. These works sit alongside the wearable art and oil triptych in the MIT portfolio’s survey of visual practice.",
+  imgs:["img/art-canvas-01.jpg","img/art-canvas-02.jpg","img/art-canvas-03.jpg","img/art-canvas-04.jpg"],
+  gallerySections:[{title:"Studies and paintings",images:[
+    {src:"img/art-canvas-01.jpg",alt:"Colorful illustrated character and city scene",caption:"Character and city illustration."},
+    {src:"img/art-canvas-02.jpg",alt:"Charcoal drawing of a woodland scene with animals",caption:"Charcoal woodland study."},
+    {src:"img/art-canvas-03.jpg",alt:"Colorful street scene with a food cart",caption:"Street scene in oil pastel and marker."},
+    {src:"img/art-canvas-04.jpg",alt:"Painting of people seated at a café",caption:"Café scene."}
+  ]}],
   links:[],
-  themes:["Fine art"],
-  pipe:[["Concept","Noise as interference within a biological and social system."],["Material","Foam, timber, and drawn and 3D-printed elements."],["Work","A sculptural form that grows toward a changed equilibrium."]]
-});
-WORK.push({
-  id:"parasitism-brimming-cities",
-  city:"auckland",
-  num:"A3",
-  title:"Brimming Cities",
-  sub:"A model of density, development, and interdependence",
-  meta:{Type:"Individual work",Medium:"Cardboard, plaster, wood, and string",Date:"2020–2021"},
-  year:"2020–2021",
-  role:"Individual artwork",
-  text:"A vertically dense city model responds to the spectacle of the Burj Khalifa by asking how urban growth might stay connected to its land and residents. Its interlocking structures imagine development as a web of dependencies rather than an isolated monument.",
-  imgs:["img/parasitism-brimming-cities.jpg"],
-  links:[],
-  themes:["Fine art"],
-  pipe:[["Reference","A visit to the Burj Khalifa and its surrounding landscape."],["Model","A vertical city assembled from collected and constructed materials."],["Question","How can density remain in relationship with land and residents?"]]
-});
-WORK.push({
-  id:"parasitism-apocalypse",
-  city:"auckland",
-  num:"A6",
-  title:"Apocalypse",
-  sub:"An oil painting on interdependence and revelation",
-  meta:{Type:"Individual work",Medium:"Oil paint",Dimensions:"92 × 61 cm",Date:"2020–2021"},
-  year:"2020–2021",
-  role:"Individual artwork",
-  text:"This painting imagines apocalypse as revelation rather than destruction, bringing human, animal, and spiritual worlds into one unsettled landscape. It closes the Parasitism series by asking how people might understand their place within a wider living world.",
-  imgs:["img/parasitism-apocalypse.jpg"],
-  links:[],
-  themes:["Fine art"],
-  pipe:[["Idea","Apocalypse as revelation, not only catastrophe."],["Composition","Foreground and background meet across a shared landscape."],["Question","What is our place within the wider world?"]]
+  themes:["Fine art","Sketchbook"]
 });
 WORK.push({
   id:"death-valley-sketchbook",
@@ -570,7 +601,21 @@ WORK.push({
   year:"2024",
   role:"Individual fieldwork and sketchbook",
   text:"Drawings and field notes from a geological excursion through Death Valley, recording the forms and processes of Eagle’s Mountain, Ubehebe Crater, and Gower Gulch. The trip changed how I see both the landscape and the human footprint within it.",
-  imgs:["img/death-valley-01.jpg","img/death-valley-02.jpg","img/death-valley-03.jpg","img/death-valley-04.jpg","img/death-valley-05.jpg","img/death-valley-06.jpg","img/death-valley-07.jpg"],
+  imgs:["img/death-valley-fieldwork-spread.jpg","img/death-valley-01.jpg","img/death-valley-02.jpg","img/death-valley-03.jpg","img/death-valley-04.jpg","img/death-valley-05.jpg","img/death-valley-06.jpg","img/death-valley-07.jpg"],
+  gallerySections:[
+    {title:"Sketches and fieldwork",images:[
+      {src:"img/death-valley-fieldwork-spread.jpg",alt:"Death Valley sketchbook drawings shown beside geology fieldwork photographs",caption:"Sketches and fieldwork photographs side by side."}
+    ]},
+    {title:"Field sketches",images:[
+      {src:"img/death-valley-01.jpg",alt:"Death Valley field sketch 1",caption:"Field sketch."},
+      {src:"img/death-valley-02.jpg",alt:"Death Valley field sketch 2",caption:"Field sketch."},
+      {src:"img/death-valley-03.jpg",alt:"Death Valley field sketch 3",caption:"Field sketch."},
+      {src:"img/death-valley-04.jpg",alt:"Death Valley field sketch 4",caption:"Field sketch."},
+      {src:"img/death-valley-05.jpg",alt:"Death Valley field sketch 5",caption:"Field sketch."},
+      {src:"img/death-valley-06.jpg",alt:"Death Valley field sketch 6",caption:"Field sketch."},
+      {src:"img/death-valley-07.jpg",alt:"Death Valley field sketch 7",caption:"Field sketch."}
+    ]}
+  ],
   links:[],
   themes:["Fine art","Sketchbook"],
   pipe:[["Observe","Sketch landforms and material changes in the field."],["Record","Combine drawings, diagrams, and written notes."],["Reflect","Read the geological landscape alongside human impact."]]
@@ -652,9 +697,11 @@ function openSheet(id){
   const w=WORK.find(x=>x.id===id);
   const meta=Object.entries(w.meta||{}).map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
   const imgs=(w.imgs||[]);
+  const galleries=w.gallerySections||(imgs.length?[{images:imgs.map(src=>({src,alt:w.title}))}]:[]);
+  const galleryMarkup=galleries.map(section=>`<section class="work-gallery">${section.title?`<h3>${esc(section.title)}</h3>`:""}<div class="shots">${section.images.map(image=>`<figure><img src="${esc(image.src)}" alt="${esc(image.alt||w.title)}" loading="lazy">${image.caption?`<figcaption>${esc(image.caption)}</figcaption>`:""}</figure>`).join("")}</div></section>`).join("");
   $("#sheetbody").innerHTML=`<p class="eyebrow" style="margin:8px 0 0">${w.num?w.num+" · ":""}${cityOf(w.city).name}</p>
     <h2 id="sh-title">${esc(w.title)}</h2>${w.sub?`<p class="role">${esc(w.sub)}</p>`:""}
-    ${imgs.length?`<div class="shots">${imgs.map(i=>`<img src="${i}" alt="${esc(w.title)}">`).join("")}</div>`:""}
+    ${galleryMarkup}
     ${meta?`<dl class="dl">${meta}</dl>`:""}
     ${w.question?`<h4 style="margin-top:0">The question</h4><p class="q">${esc(w.question)}</p>`:""}
     <p style="font-size:17px;line-height:1.6;margin:0">${esc(w.text)}</p>
@@ -765,11 +812,13 @@ const stepIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)re
 document.querySelectorAll(".step").forEach(s=>stepIO.observe(s));
 
 const CAPS=[["Urban design frameworks and representation","Frameworks, sections, axonometrics and eye-level views that carry a planning argument.","Rhino · Illustrator · InDesign","img/p-rep-axon.jpg",["hinge","interlink"]],
- ["Spatial analysis and GIS","Network distance, buffers, overlays and rankings that turn open data into a priority list.","QGIS · ArcGIS Pro · PostGIS · Python (GeoPandas, OSMnx)","img/g-allston-grocery.jpg",["allston-grocery","allston-crashes","p3-4"]],
- ["Remote sensing and 3D","Surface temperature from Landsat, building heights from LiDAR, and city models that run in a browser.","Landsat · LiDAR · WebGL","img/g-allston-heat.jpg",["allston-heat","p1-1"]],
+ ["Geospatial data engineering","Build repeatable pipelines that join open vector data, municipal LiDAR and derived spatial layers into usable products.","Python · GeoPandas · PostGIS · OSMnx","img/g-auckland-3d.jpg",["p1-1","blockparty","p3-7"]],
+ ["GIS geoprocessing and spatial modeling","Go beyond map-making with network analysis, georeferencing, buffers, isochrones, overlays, raster change and corridor ranking.","QGIS · ArcGIS Pro · Python","img/g-allston-grocery.jpg",["allston-grocery","allston-crashes","allston-rails","p3-4"]],
+ ["Remote sensing, DEMs and 3D","Derive building heights from surface and terrain models, compare Landsat heat over time, and publish city models in the browser.","LiDAR · DEM / DSM / DTM · Landsat · WebGL","img/g-allston-heat.jpg",["p1-1","allston-heat"]],
  ["Data visualization and information design","Pages built around one finding, with every source and method on the page.","Python · D3 · Illustrator","img/g-allston-census.jpg",["allston-census","p2-2","p3-6"]],
- ["Storytelling and public presentation","Narrative for critics, communities and agencies, and presenting it in person.","Talks · summits · demos","img/g-talk-friction-map.jpg",["p1-3","p3-2","blockparty"]],
- ["Decision tools and civic AI","Tools that narrow the options and leave the choice, and the record of it, with people.","Python · human-in-the-loop AI","img/g-flood-assistant-v2.jpg",["p3-7","p1-4"]]];
+ ["Applied AI and decision tools","Use AI for bounded, reviewable tasks; make trade-offs, uncertainty and human decisions visible.","Python · human-in-the-loop AI · geospatial screening","img/g-flood-assistant-v2.jpg",["p3-7","blockparty","p1-4"]],
+ ["Demos, pitches and stakeholder communication","Frame a clear use case, demonstrate a working tool, and explain its evidence and limits to experts, agencies and public audiences.","Live demos · expert reviews · agency presentations","img/g-talk-friction-map.jpg",["p3-7","blockparty","p1-3","p2-2"]],
+ ["Storytelling and public presentation","Turn spatial findings into a narrative for critics, communities and agencies, and present it in person.","Talks · summits · presentations","img/g-talk-friction-map.jpg",["p1-3","p3-2","blockparty"]]];
 $("#caps").innerHTML=CAPS.map(([t,p,sw,img,ev])=>`<div class="cap"><img src="${img}" alt="" loading="lazy"><h3>${esc(t)}</h3><p>${esc(p)}</p><p class="sw">${esc(sw)}</p><div class="ev">${ev.map(id=>`<button data-open="${id}">${esc(workOf(id).title.split(":")[0])}</button>`).join("")}</div></div>`).join("");
 
 
