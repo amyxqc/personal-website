@@ -228,18 +228,39 @@ function frame(n){raf=0;if(!seen||document.hidden){last=0;return;}const dt=Math.
 const go=()=>{if(!raf)raf=requestAnimationFrame(frame);};
 const LABEL={collide:"Collider",gravity:"Gravity model",aurora:"Aurora",agglom:"Agglomeration",symmetry:"Symmetry breaking",schelling:"Segregation",quantum:"Quantum wave",growth:"City growth",soap:"Soap film",swing:"Jazz swing",diffuse:"Diffusion of ideas",charge:"Electric charge",snow:"Snowflakes",action:"Least action",plasma:"Plasma",chladni:"Vibrating sand",cherenkov:"Cherenkov glow",anneal:"Molecules",irid:"Iridescence",ink:"Ink"};
 const ORDER=Object.keys(LABEL),HOLD={swing:8.4,agglom:7.6,schelling:7.8,diffuse:8,growth:8,collide:7,aurora:9.8,gravity:7.4,symmetry:6.8,quantum:6.4,soap:6.8,charge:6.4,snow:7.4,action:6.4,plasma:7.6,chladni:8,cherenkov:7.2,anneal:7,irid:8.4,ink:8};
+const INFO={collide:"Two beams meet. The debris curves away like charged particles in a magnetic field, then settles into my name.",
+gravity:"The gravity model of travel: each pen stroke is a place, and the more ink it holds and the closer it is, the more trips it draws.",
+aurora:"Electrons spiral down a magnetic field and light up whatever they strike, green below and violet above.",
+agglom:"Being near others pays, so people gather into cities, until crowding pushes back.",
+symmetry:"A uniform state becomes unstable and a pattern chooses itself: the Swift–Hohenberg equation.",
+schelling:"Thomas Schelling, 1971: if everyone wants just over half of their neighbors to be like them, the whole name still sorts itself into two.",
+quantum:"A wave follows Schrödinger’s equation and cools into its lowest-energy state, which is my name.",
+growth:"Streets reach toward the people not yet connected, and the busiest ones widen into avenues.",
+soap:"The colors are light interfering inside a thin film. They slide as the film drains, until it pops. Tap to pop it yourself.",
+swing:"Kuramoto’s oscillators: every player starts at a different tempo, and listening to neighbors pulls the band into one swung beat.",
+diffuse:"Each adopter tells their neighbors. A few long ties let an idea jump between groups, and adoption draws an S.",
+charge:"Current runs along each stroke. Your pointer carries the same charge, so the letters lean away and sparks jump across.",
+snow:"Vapor freezes onto a six-sided grid, the way snowflakes branch.",
+action:"Many possible paths are tried at once. Most cancel each other out, and the one that remains is my name.",
+plasma:"Magnetron sputtering: a plasma knocks atoms off two metal targets, and they land as a thin film.",
+chladni:"Sand on a vibrating plate gathers where the plate is still. Tap to change the note.",
+cherenkov:"The pen moves faster than its own light can spread, so the light piles up into a blue cone.",
+anneal:"A hot gas cools until its molecules fall into place. Your pointer melts them again.",
+irid:"Thin-film color, like a Morpho butterfly’s wing. Move the pointer to tilt the light.",
+ink:"Pen on paper. Each stroke springs back to where it was drawn."};
 const ui=document.createElement("div");ui.className="nm-ui";ui.setAttribute("role","group");ui.setAttribute("aria-label","Name animation");
-ui.innerHTML='<button type="button" data-go="-1" aria-label="Previous animation">\u2039</button><button type="button" class="pz" aria-label="Pause animations">\u275A\u275A</button><button type="button" data-go="1" aria-label="Next animation">\u203A</button><select aria-label="Choose an animation">'+ORDER.map(k=>`<option value="${k}">${LABEL[k]}</option>`).join("")+"</select>";host.after(ui);
-const sel=ui.querySelector("select");let paused=false,hold=false,shown=0,timer=0,from=1;try{from=+localStorage.getItem("nameNext")||1;}catch(_){}
+ui.innerHTML='<button type="button" class="nf" aria-expanded="false" aria-controls="nm-pop" aria-label="What am I seeing?"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.500M12 7.600v.1"/></svg></button><div class="nm-pop" id="nm-pop" hidden><b></b><p></p><button type="button" class="pz" aria-label="Pause animations">Pause</button></div>';host.after(ui);const nf=ui.querySelector(".nf"),pop=ui.querySelector(".nm-pop");
+const tell=()=>{pop.querySelector("b").textContent=LABEL[mode];pop.querySelector("p").textContent=INFO[mode];},openPop=v=>{if(v)tell();pop.hidden=!v;nf.setAttribute("aria-expanded",String(v));};nf.onclick=()=>openPop(pop.hidden);
+document.addEventListener("pointerdown",e=>{if(!pop.hidden&&!ui.contains(e.target))openPop(false);});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pop.hidden){openPop(false);nf.focus();}});
+let paused=false,hold=false,shown=0,timer=0,from=1;try{from=+localStorage.getItem("nameNext")||1;}catch(_){}
 if(!(from>0&&from<ORDER.length))from=1;
-function set(m,again){if(again&&cv.width){snap.width=cv.width;snap.height=cv.height;snap.getContext("2d").drawImage(cv,0,0);fade=1;}mode=m;ptr=null;t0=performance.now();last=0;M[m].start(again);sel.value=m;paint();go();plan();const i=ORDER.indexOf(m);if(i>0)try{localStorage.setItem("nameNext",String(i+1<ORDER.length?i+1:1));}catch(_){}}
+function set(m,again){if(again&&cv.width){snap.width=cv.width;snap.height=cv.height;snap.getContext("2d").drawImage(cv,0,0);fade=1;}mode=m;ptr=null;t0=performance.now();last=0;M[m].start(again);paint();if(!pop.hidden)tell();go();plan();const i=ORDER.indexOf(m);if(i>0)try{localStorage.setItem("nameNext",String(i+1<ORDER.length?i+1:1));}catch(_){}}
 /* the first visit runs in order; a later visit opens with the first one, then picks up where the last visit stopped */
 function next(){if(mode===ORDER[0]&&shown===1&&from>1){const k=ORDER[from];from=1;return k;}return ORDER[(ORDER.indexOf(mode)+1)%ORDER.length];}
 const done=()=>shown>1&&mode==="ink"||shown>=ORDER.length;
-function plan(){clearTimeout(timer);if(paused||done())return;timer=setTimeout(()=>{if(paused)return;if(hold||!seen||document.hidden||document.activeElement===sel||document.querySelector("dialog[open]")){plan();return;}shown++;set(next(),true);},HOLD[mode]*1000);}
-function pause(v){paused=v;const b=ui.querySelector(".pz");b.textContent=v?"\u25B6":"\u275A\u275A";b.setAttribute("aria-label",v?"Play animations":"Pause animations");if(v)clearTimeout(timer);else{shown=1;if(mode==="ink"){set(ORDER[0],true);}else plan();}}
-ui.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.go){pause(true);set(ORDER[(ORDER.indexOf(mode)+ +b.dataset.go+ORDER.length)%ORDER.length],true);}else pause(!paused);});
-sel.addEventListener("change",()=>{pause(true);set(sel.value,true);});
+function plan(){clearTimeout(timer);if(paused||done())return;timer=setTimeout(()=>{if(paused)return;if(hold||!seen||document.hidden||!pop.hidden||document.querySelector("dialog[open]")){plan();return;}shown++;set(next(),true);},HOLD[mode]*1000);}
+function pause(v){paused=v;const b=ui.querySelector(".pz");b.textContent=v?"Play":"Pause";b.setAttribute("aria-label",v?"Play animations":"Pause animations");if(v)clearTimeout(timer);else{shown=1;if(mode==="ink"){set(ORDER[0],true);}else plan();}}
+ui.querySelector(".pz").onclick=()=>{pause(!paused);if(!paused)openPop(false);};
 const at=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.width*W};};
 cv.addEventListener("pointermove",e=>{const q=at(e),l=(v)=>Math.max(-270,Math.min(270,v));q.vx=ptr?l((q.x-ptr.x)*26):0;q.vy=ptr?l((q.y-ptr.y)*26):0;ptr=q;hold=true;go();});const off=()=>{ptr=null;hold=false;go();};cv.addEventListener("pointerleave",off);cv.addEventListener("pointercancel",off);cv.addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")off();});cv.addEventListener("click",e=>{const p=at(e);M[mode].tap(p.x,p.y);go();});
 let was=true;new IntersectionObserver(es=>{seen=es[0].isIntersecting;if(seen){go();if(false){shown=2;const k=ORDER[(Math.max(1,from)+0)%ORDER.length];from=from%(ORDER.length-2)+1;set(k,true);clearTimeout(timer);timer=setTimeout(()=>{if(!paused&&!hold)set("ink",true);},HOLD[k]*1000);}}was=seen;}).observe(cv);document.addEventListener("visibilitychange",go);onTheme(()=>{look();paint();});look();set(MODE,false);new ResizeObserver(size).observe(host);size();
