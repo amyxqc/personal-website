@@ -1,7 +1,8 @@
 """Refresh the newsletter panel in index.html from the public Algorithmic Commons feed.
 
 Shows the newest posts, newest first. To keep a post out of the panel, add its slug
-(the last part of its web address) to EXCLUDE. Run by .github/workflows/newsletter.yml.
+(the last part of its web address) to EXCLUDE. Run it from this folder on your own computer
+(Substack refuses requests from GitHub's servers), then commit index.html and img.
 """
 import glob, html, io, os, re, sys, urllib.request
 import xml.etree.ElementTree as ET
