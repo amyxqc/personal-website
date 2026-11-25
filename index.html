@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Amy X. Chen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&family=Google+Sans+Code:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Lora:ital,wght@0,400..600;1,400..500&family=Google+Sans+Code:wght@400;500&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <style>
@@ -10,7 +10,7 @@
 :root{
   --bg:#ffffff; --surface:#f2f4f6; --surface2:#e8ecf0; --ink:#121417; --muted:#5b636d; --line:#e3e7eb;
   --land:#d9dfe5; --sea:#f2f4f6; --pin:#121417; --accent:#2f6fe4; --accent2:#7b5cf0; --pill:#121417; --pill-ink:#ffffff;
-  --sans:"Figtree",-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Google Sans Code",ui-monospace,Menlo,monospace;
+  --serif:"Lora",Georgia,"Times New Roman",serif; --sans:"Inter Tight","Helvetica Neue",-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"Google Sans Code",ui-monospace,Menlo,monospace;
   --r:24px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -130,13 +130,21 @@ html,body{overflow-x:clip}
 @media (max-width:760px){.hero .art{right:0;width:100%;bottom:auto;top:52%;opacity:.12}}
 /* header: newsletter panel and the drawing sketching itself in */
 .hero-grid{display:grid;gap:clamp(28px,4vw,56px);align-items:center}
-@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(320px,.85fr)} .hero-grid h1{font-size:clamp(40px,5vw,62px)} header.hero{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(110px,12vw,170px)}
-  .hero .art{left:0;right:0;width:100%;bottom:-8px;opacity:.34;-webkit-mask-image:linear-gradient(to bottom,transparent 48%,#000 80%);mask-image:linear-gradient(to bottom,transparent 48%,#000 80%)}}
-@property --draw{syntax:"<percentage>";inherits:false;initial-value:130%}
-.hero .art{--draw:130%}
-.hero .art img{-webkit-mask-image:linear-gradient(100deg,#000 calc(var(--draw) - 30%),transparent var(--draw));mask-image:linear-gradient(100deg,#000 calc(var(--draw) - 30%),transparent var(--draw))}
-@media (prefers-reduced-motion:no-preference){.hero .art img{animation:draw 3.2s cubic-bezier(.4,0,.3,1) both}}
-@keyframes draw{from{--draw:0%}to{--draw:130%}}
+@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(320px,.85fr)} .hero-grid h1{font-size:clamp(38px,4.5vw,56px)} .hero-grid .sub{margin-top:18px;font-size:18px;max-width:60ch} .hero-grid .ctas{margin-top:22px} header.hero{padding-top:clamp(24px,2.6vw,36px);padding-bottom:clamp(28px,4vw,48px)}}
+.sketch{position:relative;margin:clamp(14px,1.6vw,22px) 0 0;touch-action:pan-y}
+.sketch .cv{position:relative;aspect-ratio:1175/450;cursor:crosshair}
+.sketch img,.sketch canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sketch.live img{visibility:hidden}
+.sketch:not(.live) .cv{background:url(img/hero-color.webp) center/100% 100% no-repeat}
+.sketch .cp{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--muted)}
+.sketch .cp button{border:0;background:none;padding:6px 0;font:inherit;color:var(--accent);cursor:pointer}
+.sketch .cp button:hover{text-decoration:underline}
+.sketch .cp button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.sketch:not(.live) .acts{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sketch img{filter:invert(1)}}
+:root[data-theme="dark"] .sketch img{filter:invert(1)}
+.hero h1,.sh h2,.feat h3,#sheet h2,#rq h2,.nl-slide b,.flood-feature h3,.caps h3{font-family:var(--serif);letter-spacing:-.018em}
+.hero h1{line-height:1.08}
 .nl{background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:var(--r);padding:14px;min-width:0}
 .nl-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:2px 6px 12px}
 .nl-head h2{margin:0;font-weight:500;font-size:17px;letter-spacing:-.01em}
@@ -357,7 +365,6 @@ html:has(dialog[open]){overflow:hidden}
 
 <div class="wrap">
 <header class="hero" id="top">
-  <div class="art" aria-hidden="true"><img src="img/hero-fontainebleau.png" alt=""></div>
   <div class="hero-grid"><div>
   <p class="eyebrow">Urban analytics · Spatial AI · Harvard GSD</p>
   <h1>I use spatial data to inform urban planning, policy, and investment decisions.</h1>
@@ -374,6 +381,10 @@ html:has(dialog[open]){overflow:hidden}
 <!-- /newsletter:slides --></div>
     <div class="nl-bar"><div class="nl-dots"><!-- newsletter:dots --><button class="d" type="button" aria-label="Show essay 1 of 4" aria-current="true"></button><button class="d" type="button" aria-label="Show essay 2 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 3 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 4 of 4" aria-current="false"></button><!-- /newsletter:dots --><button type="button" id="nl-pause" aria-label="Pause rotation">❚❚</button></div><a class="pill ghost" href="https://algorithmiccommons.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a></div>
   </aside></div>
+  <figure class="sketch" id="sketch">
+    <div class="cv"><img src="img/hero-fontainebleau.png" alt="Ink drawing of the Château de Fontainebleau and its gardens"></div>
+    <figcaption class="cp"><span>Château de Fontainebleau, ink, 2023. Colors from my pencil drawing of the same château. <span class="acts">Move or drag across it to deepen them.</span></span><span class="acts"><button type="button" id="redraw">Draw again</button></span></figcaption>
+  </figure>
 </header>
 
 <section id="about" class="about-top">
@@ -609,6 +620,7 @@ html:has(dialog[open]){overflow:hidden}
 
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image"><img id="lbimg" alt=""><p id="lbcap"></p></div>
 
+<script src="img/hero-ink.js"></script>
 <script>
 const backToTop=document.querySelector("#back-to-top");
 function updateBackToTop(){
@@ -1104,6 +1116,49 @@ links.forEach((a,k)=>{a.addEventListener("click",e=>{e.preventDefault();show(k,t
 region.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;show(+b.dataset.go,"force");history.replaceState(null,"","#"+panels[cur].id);});
 addEventListener("hashchange",fromHash);
 if(!fromHash())show(0);})();
+/* header drawing: the traced pen strokes draw themselves, then the palette of my colored-pencil
+   drawing of the same château fills in behind the pen and stays; the pointer deepens it. Static if motion is reduced. */
+(()=>{const fig=$("#sketch");if(!window.INK||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+const cv=fig.querySelector(".cv"),mk=c=>{const x=document.createElement("canvas");x.className=c;x.setAttribute("aria-hidden","true");cv.append(x);return x;};
+const wash=mk("wash"),ink=mk("ink"),wx=wash.getContext("2d"),ix=ink.getContext("2d"),mask=document.createElement("canvas"),mx=mask.getContext("2d");
+const COLOR=new Image();COLOR.onload=()=>run();COLOR.src="img/hero-color.webp";
+const MW=470,MH=180,WW=1175,WH=450,T=3600,REST=.62;mask.width=MW;mask.height=MH;wash.width=WW;wash.height=WH;let reveal=0;
+const S=INK.s.map(a=>{const p=[a[1],a[2]];let x=a[1],y=a[2],L=0;for(let i=3;i<a.length;i+=2){x+=a[i];y+=a[i+1];p.push(x,y);L+=Math.hypot(a[i],a[i+1]);}return{w:a[0]/10,p,L};});
+S.forEach(s=>{s.t0=(s.p[0]/INK.w)*.8*T+Math.random()*.12*T;s.d=Math.max(90,Math.min(700,s.L*2.2));});
+let sc=1,thin=1,t0=0,drawing=false,energy=0,raf=0,seen=true,started=false,last=null;
+function pen(){const q=ink.width/INK.w;sc=q;ix.setTransform(q,0,0,q,0,0);ix.lineCap=ix.lineJoin="round";ix.strokeStyle=getComputedStyle(fig).color;const css=cv.clientWidth;thin=(css<600?.42:.75)*(ink.width/css)/q;ix.globalAlpha=css<600?.85:1;}
+function seg(s,a,b){const n=s.p.length/2-1,i=Math.floor(a*n),j=Math.ceil(b*n);if(j<=i)return;ix.lineWidth=Math.max(s.w*.9,thin);ix.beginPath();ix.moveTo(s.p[2*i],s.p[2*i+1]);for(let m=i+1;m<=j;m++)ix.lineTo(s.p[2*m],s.p[2*m+1]);ix.stroke();}
+function all(){pen();ix.clearRect(0,0,INK.w,INK.h);S.forEach(s=>seg(s,0,1));}
+function fit(){const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1),w=Math.round(r.width*d),h=Math.round(r.height*d);if(!w||ink.width===w)return;ink.width=w;ink.height=h;if(drawing){pen();S.forEach(s=>seg(s,0,s.done||0));}else if(started)all();}
+function dab(x,y,r,a){const g=mx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(0,0,0,${a})`);g.addColorStop(.55,`rgba(0,0,0,${a*.6})`);g.addColorStop(1,"rgba(0,0,0,0)");mx.fillStyle=g;mx.fillRect(x-r,y-r,2*r,2*r);energy=200;}
+function frame(now){raf=0;if(!seen||document.hidden){last=now;return;}
+  const dt=Math.min(64,last?now-last:16);last=now;
+  if(drawing){const e=now-t0;let left=false;S.forEach(s=>{const was=s.done||0;if(was>=1)return;const f=Math.min(1,(e-s.t0)/s.d);if(f>was){seg(s,was,f);s.done=f;}if(f<1)left=true;});
+    reveal=Math.max(0,(e-500)/T);
+    if(!left&&reveal>=1.35)drawing=false;}
+  mx.globalCompositeOperation="destination-out";mx.fillStyle=`rgba(0,0,0,${.011*dt/16})`;mx.fillRect(0,0,MW,MH);mx.globalCompositeOperation="source-over";
+  energy=Math.max(0,energy-dt/16);
+  if(energy<=0)mx.clearRect(0,0,MW,MH);
+  wx.globalCompositeOperation="source-over";wx.clearRect(0,0,WW,WH);
+  if(drawing){const g=wx.createLinearGradient((reveal-.3)*WW,0,reveal*WW,0);g.addColorStop(0,`rgba(0,0,0,${REST})`);g.addColorStop(.6,"rgba(0,0,0,.95)");g.addColorStop(1,"rgba(0,0,0,0)");wx.fillStyle=g;}else wx.fillStyle=`rgba(0,0,0,${REST})`;
+  wx.fillRect(0,0,WW,WH);
+  if(energy>0){wx.globalAlpha=Math.min(1,energy/90);wx.drawImage(mask,0,0,WW,WH);wx.globalAlpha=1;}
+  wx.globalCompositeOperation="source-in";
+  if(COLOR.complete&&COLOR.naturalWidth)wx.drawImage(COLOR,0,0,WW,WH);else wx.clearRect(0,0,WW,WH);
+  if(energy<=0&&!drawing){last=null;return;}
+  raf=requestAnimationFrame(frame);}
+const run=()=>{if(started&&!raf)raf=requestAnimationFrame(frame);};
+function start(){started=true;pen();ix.clearRect(0,0,INK.w,INK.h);mx.clearRect(0,0,MW,MH);wx.clearRect(0,0,WW,WH);reveal=0;energy=0;S.forEach(s=>s.done=0);drawing=true;t0=performance.now();last=null;run();}
+let pv=null;
+cv.addEventListener("pointermove",e=>{if(!started)return;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*MW,y=(e.clientY-r.top)/r.height*MH,n=pv?Math.min(14,Math.ceil(Math.hypot(x-pv[0],y-pv[1])/8)):1;
+  for(let i=1;i<=n;i++){const u=i/n;dab(pv?pv[0]+(x-pv[0])*u:x,pv?pv[1]+(y-pv[1])*u:y,30+Math.random()*16,.16);}pv=[x,y];run();});
+cv.addEventListener("pointerleave",()=>pv=null);cv.addEventListener("pointerdown",()=>pv=null);
+$("#redraw").onclick=start;
+new ResizeObserver(fit).observe(cv);fit();fig.classList.add("live");
+new IntersectionObserver(es=>{seen=es[0].isIntersecting;if(!started&&es[0].intersectionRatio>=.14)start();else if(seen&&(drawing||energy>0))run();},{threshold:[0,.14]}).observe(cv);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&(drawing||energy>0))run();});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(started&&!drawing)all();});
+})();
 /* header newsletter panel: rotates every 6 seconds; stops on hover, focus, pause or reduced motion */
 (()=>{const nl=$("#nl"),sl=[...nl.querySelectorAll(".nl-slide")],ds=[...nl.querySelectorAll(".d")],pb=$("#nl-pause");
 const still=matchMedia("(prefers-reduced-motion: reduce)").matches;let k=0,paused=still,hold=false;
