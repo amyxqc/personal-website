@@ -141,6 +141,21 @@ html,body{overflow-x:clip}
 .sketch .cp button:hover{text-decoration:underline}
 .sketch .cp button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 .sketch:not(.live) .acts{display:none}
+.sketch img.orig{visibility:visible;opacity:0;filter:none!important;object-fit:cover;clip-path:inset(0 0 0 .9% round 14px);transition:opacity .9s;pointer-events:none}
+.sketch.original img.orig{opacity:1}
+.sketch.original .cv{cursor:default}
+.sketch .right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sketch .seg{display:inline-flex;background:var(--surface);border-radius:999px;padding:3px}
+.sketch .cp .seg button{padding:6px 14px;border-radius:999px;color:var(--muted);font-size:13px}
+.sketch .cp .seg button:hover{text-decoration:none;color:var(--ink)}
+.sketch .cp .seg button[aria-pressed=true]{background:var(--bg);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.sketch .refs{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+.sketch .refs button{display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;font:inherit;font-size:13.5px;line-height:1.4;color:var(--muted);text-align:left;cursor:zoom-in}
+.sketch .refs button:hover{color:var(--ink)}
+.sketch .refs button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.sketch .refs img{position:static;visibility:visible;width:108px;height:72px;object-fit:cover;border-radius:10px;filter:none!important;flex:0 0 auto}
+.sketch .refs span{max-width:22ch}
+@media (prefers-reduced-motion:reduce){.sketch img.orig{transition:none}}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sketch img{filter:invert(1)}}
 :root[data-theme="dark"] .sketch img{filter:invert(1)}
 .hero h1,.sh h2,.feat h3,#sheet h2,#rq h2,.nl-slide b,.flood-feature h3,.caps h3{font-family:var(--serif);letter-spacing:-.018em}
@@ -382,8 +397,12 @@ html:has(dialog[open]){overflow:hidden}
     <div class="nl-bar"><div class="nl-dots"><!-- newsletter:dots --><button class="d" type="button" aria-label="Show essay 1 of 4" aria-current="true"></button><button class="d" type="button" aria-label="Show essay 2 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 3 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 4 of 4" aria-current="false"></button><!-- /newsletter:dots --><button type="button" id="nl-pause" aria-label="Pause rotation">❚❚</button></div><a class="pill ghost" href="https://algorithmiccommons.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a></div>
   </aside></div>
   <figure class="sketch" id="sketch">
-    <div class="cv"><img src="img/hero-fontainebleau.png" alt="Ink drawing of the Château de Fontainebleau and its gardens"></div>
-    <figcaption class="cp"><span>Château de Fontainebleau, ink, 2023. Colors from my pencil drawing of the same château. <span class="acts">Move or drag across it to deepen them.</span></span><span class="acts"><button type="button" id="redraw">Draw again</button></span></figcaption>
+    <div class="cv"><img src="img/hero-fontainebleau.png" alt="Ink drawing of the Château de Fontainebleau and its gardens"><img class="orig" data-src="img/hero-original.jpg" alt=""></div>
+    <figcaption class="cp"><span id="sk-cap">Château de Fontainebleau, ink, 2023. Colors from my pencil drawing of the same château. <span class="acts">Move or drag across it to deepen them.</span></span><span class="right"><span class="seg" role="group" aria-label="Choose a view of the drawing"><button type="button" id="v-color" aria-pressed="true">In color</button><button type="button" id="v-orig" aria-pressed="false">Original page</button></span><span class="acts"><button type="button" id="redraw">Draw again</button></span></span></figcaption>
+    <div class="refs">
+      <button type="button" data-zoom="img/hero-sketchbook.jpg" data-alt="Hand holding the open sketchbook with the ink drawing of the Château de Fontainebleau" data-cap="The sketchbook page. Château de Fontainebleau, ink, 2023."><img src="img/hero-sketchbook-t.jpg" alt="" loading="lazy"><span>The page in my sketchbook</span></button>
+      <button type="button" data-zoom="img/hero-pencil.jpg" data-alt="Ink and colored-pencil drawing of the Château de Fontainebleau seen down a tree-lined path" data-cap="Château de Fontainebleau, ink and colored pencil, July 4, 2023. The colors in the animation come from this drawing."><img src="img/hero-pencil-t.jpg" alt="" loading="lazy"><span>The pencil drawing the colors come from</span></button>
+    </div>
   </figure>
 </header>
 
@@ -1116,10 +1135,19 @@ links.forEach((a,k)=>{a.addEventListener("click",e=>{e.preventDefault();show(k,t
 region.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;show(+b.dataset.go,"force");history.replaceState(null,"","#"+panels[cur].id);});
 addEventListener("hashchange",fromHash);
 if(!fromHash())show(0);})();
+/* header drawing: switch to the photographed page, and open the originals full size */
+(()=>{const fig=$("#sketch"),im=fig.querySelector("img.orig"),cap=$("#sk-cap"),color=cap.innerHTML;
+function view(o){if(o&&!im.src)im.src=im.dataset.src;fig.classList.toggle("original",o);$("#v-color").setAttribute("aria-pressed",String(!o));$("#v-orig").setAttribute("aria-pressed",String(o));
+  im.alt=o?"Photograph of the original sketchbook page: ink drawing of the Château de Fontainebleau":"";cap.innerHTML=o?"The original sketchbook page, photographed. Ink, 2023.":color;}
+$("#v-color").onclick=()=>view(false);$("#v-orig").onclick=()=>view(true);$("#redraw").addEventListener("click",()=>view(false));
+const warm=()=>{if(!im.src)im.src=im.dataset.src;};$("#v-orig").addEventListener("pointerenter",warm);$("#v-orig").addEventListener("focus",warm);
+let from=null;fig.querySelectorAll("[data-zoom]").forEach(b=>b.onclick=()=>{from=b;$("#lbimg").src=b.dataset.zoom;$("#lbimg").alt=b.dataset.alt;$("#lbcap").textContent=b.dataset.cap;$("#lb").hidden=false;});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&from){from.focus();from=null;}});
+})();
 /* header drawing: the traced pen strokes draw themselves, then the palette of my colored-pencil
    drawing of the same château fills in behind the pen and stays; the pointer deepens it. Static if motion is reduced. */
 (()=>{const fig=$("#sketch");if(!window.INK||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-const cv=fig.querySelector(".cv"),mk=c=>{const x=document.createElement("canvas");x.className=c;x.setAttribute("aria-hidden","true");cv.append(x);return x;};
+const cv=fig.querySelector(".cv"),mk=c=>{const x=document.createElement("canvas");x.className=c;x.setAttribute("aria-hidden","true");cv.insertBefore(x,cv.querySelector("img.orig"));return x;};
 const wash=mk("wash"),ink=mk("ink"),wx=wash.getContext("2d"),ix=ink.getContext("2d"),mask=document.createElement("canvas"),mx=mask.getContext("2d");
 const COLOR=new Image();COLOR.onload=()=>run();COLOR.src="img/hero-color.webp";
 const MW=470,MH=180,WW=1175,WH=450,T=3600,REST=.62;mask.width=MW;mask.height=MH;wash.width=WW;wash.height=WH;let reveal=0;
@@ -1150,7 +1178,7 @@ function frame(now){raf=0;if(!seen||document.hidden){last=now;return;}
 const run=()=>{if(started&&!raf)raf=requestAnimationFrame(frame);};
 function start(){started=true;pen();ix.clearRect(0,0,INK.w,INK.h);mx.clearRect(0,0,MW,MH);wx.clearRect(0,0,WW,WH);reveal=0;energy=0;S.forEach(s=>s.done=0);drawing=true;t0=performance.now();last=null;run();}
 let pv=null;
-cv.addEventListener("pointermove",e=>{if(!started)return;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*MW,y=(e.clientY-r.top)/r.height*MH,n=pv?Math.min(14,Math.ceil(Math.hypot(x-pv[0],y-pv[1])/8)):1;
+cv.addEventListener("pointermove",e=>{if(!started||fig.classList.contains("original"))return;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*MW,y=(e.clientY-r.top)/r.height*MH,n=pv?Math.min(14,Math.ceil(Math.hypot(x-pv[0],y-pv[1])/8)):1;
   for(let i=1;i<=n;i++){const u=i/n;dab(pv?pv[0]+(x-pv[0])*u:x,pv?pv[1]+(y-pv[1])*u:y,30+Math.random()*16,.16);}pv=[x,y];run();});
 cv.addEventListener("pointerleave",()=>pv=null);cv.addEventListener("pointerdown",()=>pv=null);
 $("#redraw").onclick=start;
