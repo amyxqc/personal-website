@@ -118,7 +118,7 @@ section{margin-top:clamp(40px,6vw,80px)}
 footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
 footer .l{display:flex;gap:16px;flex-wrap:wrap}
 footer a{text-decoration:none}footer a:hover{color:var(--ink)}
-@media (max-width:760px){.about{grid-template-columns:1fr} nav.top .links a:not(.pill){display:none} #sheet .panel{border-radius:0}}
+@media (max-width:760px){.about{grid-template-columns:1fr} nav.top .links a:not(.pill):not([data-pf]){display:none} #sheet .panel{border-radius:0}}
 @media (prefers-reduced-motion:reduce){.card,.back-to-top{transition:none}}
 .hero{position:relative;isolation:isolate}
 .hero .art{position:absolute;z-index:-1;right:calc(-1*clamp(16px,4vw,48px));bottom:-8px;width:min(860px,72vw);opacity:.2;pointer-events:none;
@@ -128,6 +128,37 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
 :root[data-theme="dark"] .hero .art{filter:invert(1);opacity:.16}
 html,body{overflow-x:clip}
 @media (max-width:760px){.hero .art{right:0;width:100%;bottom:auto;top:52%;opacity:.12}}
+/* header: newsletter panel and the drawing sketching itself in */
+.hero-grid{display:grid;gap:clamp(28px,4vw,56px);align-items:center}
+@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(320px,.85fr)} .hero-grid h1{font-size:clamp(40px,5vw,62px)} header.hero{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(110px,12vw,170px)}
+  .hero .art{left:0;right:0;width:100%;bottom:-8px;opacity:.34;-webkit-mask-image:linear-gradient(to bottom,transparent 48%,#000 80%);mask-image:linear-gradient(to bottom,transparent 48%,#000 80%)}}
+@property --draw{syntax:"<percentage>";inherits:false;initial-value:130%}
+.hero .art{--draw:130%}
+.hero .art img{-webkit-mask-image:linear-gradient(100deg,#000 calc(var(--draw) - 30%),transparent var(--draw));mask-image:linear-gradient(100deg,#000 calc(var(--draw) - 30%),transparent var(--draw))}
+@media (prefers-reduced-motion:no-preference){.hero .art img{animation:draw 3.2s cubic-bezier(.4,0,.3,1) both}}
+@keyframes draw{from{--draw:0%}to{--draw:130%}}
+.nl{background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:var(--r);padding:14px;min-width:0}
+.nl-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:2px 6px 12px}
+.nl-head h2{margin:0;font-weight:500;font-size:17px;letter-spacing:-.01em}
+.nl-head a{text-decoration:none}.nl-head a:hover{text-decoration:underline}
+.nl-head span{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.nl-stage{display:grid}
+.nl-slide{grid-area:1/1;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);border-radius:18px;overflow:hidden;background:var(--bg);opacity:0;visibility:hidden;transition:opacity .7s,visibility 0s .7s}
+.nl-slide.on{opacity:1;visibility:visible;transition:opacity .7s}
+.nl-slide .im{position:relative;overflow:hidden;flex:1 0 auto;aspect-ratio:16/10;background:var(--surface2)}
+.nl-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.nl-slide.on img{transition:transform .5s}.nl-slide.on:hover img{transform:scale(1.03)}
+.nl-slide .tx{padding:14px 16px 16px}
+.nl-slide .dt{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.nl-slide b{display:block;font-weight:500;font-size:17px;line-height:1.3;letter-spacing:-.01em;margin:4px 0 6px;text-wrap:balance}
+.nl-slide .ds{display:block;font-size:14px;line-height:1.45;color:var(--muted)}
+.nl-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 2px}
+.nl-dots{display:flex;align-items:center}
+.nl-dots button{border:0;background:none;padding:0;width:28px;height:32px;cursor:pointer;display:grid;place-items:center;color:var(--muted);font-size:12px}
+.nl-dots .d::before{content:"";width:8px;height:8px;border-radius:999px;background:var(--muted);opacity:.4;transition:width .3s,opacity .3s}
+.nl-dots .d[aria-current=true]::before{width:20px;opacity:1;background:var(--accent)}
+.nl a:focus-visible,.nl button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:12px}
+@media (prefers-reduced-motion:reduce){.nl-slide,.nl-slide.on,.nl-slide.on img,.nl-dots .d::before{transition:none}}
 #sheet .q{font-size:19px;line-height:1.45;margin:0 0 18px;letter-spacing:-.01em}
 
 /* Portfolio layer: selected work told as large features, a scroll-driven account of how I work,
@@ -268,6 +299,37 @@ html,body{overflow-x:clip}
 .book-thumbs button{flex:0 0 auto;border:0;padding:0;background:none;cursor:pointer;opacity:.5;border-radius:4px;display:flex;gap:1px;outline-offset:2px}
 .book-thumbs button[aria-current=true]{opacity:1;outline:2px solid var(--accent)}
 .book-thumbs img{height:64px;width:auto;display:block}
+/* portfolio pop-up and request form */
+html:has(dialog[open]){overflow:hidden}
+#pf{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:var(--surface);color:var(--ink)}
+#pf::backdrop,#rq::backdrop{background:rgba(6,7,9,.6)}
+#pf .pf-in{height:100%;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 12px) clamp(12px,3vw,28px) calc(env(safe-area-inset-bottom,0px) + 10px)}
+#pf .pf-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#pf .pf-head h2{margin:0;font-weight:500;font-size:17px;letter-spacing:-.01em}
+#pf .book{flex:1;min-height:0;display:flex;flex-direction:column;border-radius:0;padding:10px 0 0}
+#pf .book-stage{flex:1;min-height:0}
+#pf .book-stage img{width:auto;max-width:none;height:min(calc(100dvh - 230px),calc((100vw - 64px)/2*1238/956))}
+#pf .book-stage.single img{width:auto;height:min(calc(100dvh - 230px),calc((100vw - 40px)*1238/956))}
+#pf .book-bar{margin-top:10px}
+#pf .book-thumbs{margin-top:8px;padding-bottom:4px}
+#pf .book-thumbs img{height:48px}
+#pf:focus-visible,#pf .pill:focus-visible,#rq .pill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.book-acts{display:flex;gap:8px;flex-wrap:wrap}
+.rq-page{cursor:pointer}
+.linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
+#rq{width:min(480px,calc(100vw - 32px));border:0;border-radius:var(--r);padding:clamp(20px,4vw,32px);background:var(--bg);color:var(--ink);max-height:calc(100dvh - 32px);overflow-y:auto}
+#rq h2{margin:0 0 6px;font-weight:400;font-size:26px;letter-spacing:-.02em;line-height:1.15}
+#rq p{margin:0 0 14px;color:var(--muted);font-size:14.5px;line-height:1.5}
+#rq label{display:block;font-size:14px;margin:0 0 12px}
+#rq input,#rq textarea{display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+#rq input:focus-visible,#rq textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#rq .hp{position:absolute;left:-9999px}
+#rq .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+#rq .msg{margin:14px 0 0;color:var(--ink)}
+#rq .msg:empty{display:none}
+@media (max-width:759px){
+  #pf .book-stage img,#pf .book-stage.single img{height:min(calc(100dvh - 290px),calc((100vw - 32px)*1238/956))}
+}
 /* lightbox */
 #lb{position:fixed;inset:0;z-index:30;background:rgba(6,7,9,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px);gap:12px;cursor:zoom-out}
 #lb[hidden]{display:none}
@@ -287,7 +349,7 @@ html,body{overflow-x:clip}
 <div class="wrap">
 <nav class="top">
   <a class="name" href="#top">Amy X. Chen</a>
-  <div class="links"><a href="#about">About</a><a href="#selected">Selected work</a><a href="#process">How I work</a><a href="#capabilities">Capabilities</a><a href="#portfolio">Portfolio</a><a href="#work">Index</a>
+  <div class="links"><a href="#about">About</a><a href="#selected">Selected work</a><a href="#process">How I work</a><a href="#capabilities">Capabilities</a><a href="#portfolio" data-pf>Portfolio</a><a href="#work">Index</a>
     <a class="pill" href="mailto:amy_chen@gsd.harvard.edu">Get in touch</a></div>
 </nav>
 </div>
@@ -295,10 +357,22 @@ html,body{overflow-x:clip}
 <div class="wrap">
 <header class="hero" id="top">
   <div class="art" aria-hidden="true"><img src="img/hero-fontainebleau.png" alt=""></div>
+  <div class="hero-grid"><div>
   <p class="eyebrow">Urban analytics · Spatial AI · Harvard GSD</p>
   <h1>I use spatial data to inform urban planning, policy, and investment decisions.</h1>
   <p class="sub">Master in Urban Planning candidate at Harvard GSD, concentrating in urban analytics. I started in art and architecture, studied economics and mathematical probability at Columbia, and have lived in Hangzhou, Auckland, New York and now Cambridge. I build spatial evidence, and increasingly spatial AI, that people can trust when they decide what happens to a city.</p>
-  <div class="ctas"><a class="pill" href="#selected">See selected work</a><a class="pill ghost" href="#about">Why I do this</a><a class="pill ghost" href="#portfolio">Full portfolio</a><a class="pill ghost" href="#capabilities">What I bring</a><a class="pill ghost" href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a></div>
+  <div class="ctas"><a class="pill" href="#portfolio" data-pf>View portfolio</a><a class="pill ghost" href="#selected">See selected work</a><a class="pill ghost" href="#about">Why I do this</a><a class="pill ghost" href="#capabilities">What I bring</a><a class="pill ghost" href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a></div>
+  </div>
+  <aside class="nl" id="nl" aria-labelledby="nl-title">
+    <div class="nl-head"><h2 id="nl-title"><a href="https://algorithmiccommons.substack.com" target="_blank" rel="noopener">Algorithmic Commons</a></h2><span>My newsletter</span></div>
+    <div class="nl-stage">
+      <a class="nl-slide on" href="https://algorithmiccommons.substack.com/p/the-changing-energy-landscape-from" target="_blank" rel="noopener"><span class="im"><img src="img/nl-energy.jpg" alt=""></span><span class="tx"><span class="dt">Oct 2026</span><b>The Changing Energy Landscape: From Anthropic’s Arrival in Kendall Square to Harvard’s New Campus</b><span class="ds">How the invisible networks of the regional grid transformation meet the public realm at the edge of the Allstonway greenway.</span></span></a>
+      <a class="nl-slide" href="https://algorithmiccommons.substack.com/p/the-confidence-gap-how-to-integrate" target="_blank" rel="noopener"><span class="im"><img src="img/nl-transit-ai.jpg" alt="" loading="lazy"></span><span class="tx"><span class="dt">Feb 2026</span><b>Integrating machine learning for operational decision-making in public transit</b><span class="ds">Conversations at the Center for Smart Streetscapes (CS3) Innovation Summit 2026</span></span></a>
+      <a class="nl-slide" href="https://algorithmiccommons.substack.com/p/frank-gehry-in-memory-and-love" target="_blank" rel="noopener"><span class="im"><img src="img/nl-gehry.jpg" alt="" loading="lazy"></span><span class="tx"><span class="dt">Dec 2025</span><b>The legacy of Frank Gehry</b></span></a>
+      <a class="nl-slide" href="https://algorithmiccommons.substack.com/p/urban-science-as-a-tree-of-questions" target="_blank" rel="noopener"><span class="im"><img src="img/nl-urban-science.jpg" alt="" loading="lazy"></span><span class="tx"><span class="dt">Oct 2025</span><b>Urban science as a tree of questions</b><span class="ds">What actually is urban science and why should we care</span></span></a>
+    </div>
+    <div class="nl-bar"><div class="nl-dots"><button class="d" type="button" aria-label="Show essay 1 of 4" aria-current="true"></button><button class="d" type="button" aria-label="Show essay 2 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 3 of 4" aria-current="false"></button><button class="d" type="button" aria-label="Show essay 4 of 4" aria-current="false"></button><button type="button" id="nl-pause" aria-label="Pause rotation">❚❚</button></div><a class="pill ghost" href="https://algorithmiccommons.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a></div>
+  </aside></div>
 </header>
 
 <section id="about" class="about-top">
@@ -457,13 +531,13 @@ html,body{overflow-x:clip}
   </div>
 <div class="wrap">
 <section id="portfolio">
-  <div class="sh"><h2>Full portfolio</h2><p>All 22 pages, as spreads. Click a page to enlarge it, or use the arrow keys. Two pages of client work are blurred; they are available on request.</p></div>
-  <div class="book">
+  <div class="sh"><h2>Full portfolio</h2><p>All 22 pages, as spreads. Click a page to enlarge it, or use the arrow keys. Two pages of client work are blurred; <button class="linkbtn" type="button" data-rq>request the full version</button>.</p></div>
+  <div class="book" id="book">
     <div class="book-stage" id="bookstage"></div>
     <div class="book-bar">
       <span class="ctr" id="bookctr" aria-live="polite"></span>
       <div class="nav"><button class="pill ghost" id="bprev" aria-label="Previous pages">←</button><button class="pill ghost" id="bnext" aria-label="Next pages">→</button></div>
-      <a class="pill" href="Amy-X-Chen-Portfolio.pdf" download="Amy X. Chen Portfolio.pdf">Download PDF (9 MB)</a>
+      <div class="book-acts"><button class="pill ghost" type="button" data-rq>Request full version</button><a class="pill" href="Amy-X-Chen-Portfolio.pdf" download="Amy X. Chen Portfolio.pdf">Download PDF (9 MB)</a></div>
     </div>
     <div class="book-thumbs" id="bookthumbs" aria-label="Jump to a page"></div>
   </div>
@@ -514,6 +588,23 @@ html,body{overflow-x:clip}
 <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" aria-hidden="true">↑ <span>Top</span></button>
 
 <div id="sheet" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="sh-title"><button class="pill ghost close" id="close">Close</button><div id="sheetbody"></div></div></div>
+
+<dialog id="pf" aria-labelledby="pf-title"><div class="pf-in"><div class="pf-head"><h2 id="pf-title">Portfolio</h2><button class="pill ghost" type="button" id="pf-close">Close</button></div></div></dialog>
+
+<dialog id="rq" aria-labelledby="rq-title">
+  <form id="rqform">
+    <h2 id="rq-title">Request the full version</h2>
+    <p>Two pages of client work are blurred here. Tell me who you are and I'll reply myself.</p>
+    <label>Name<input name="name" autocomplete="name" required maxlength="100"></label>
+    <label>Email<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+    <label>Organization<input name="organization" autocomplete="organization" required maxlength="150"></label>
+    <label>What are you interested in? (optional)<textarea name="interest" rows="3" maxlength="1000"></textarea></label>
+    <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p>I'll use this only to reply to you.</p>
+    <div class="acts"><button class="pill" type="submit" id="rqsend">Send request</button><button class="pill ghost" type="button" id="rqclose">Cancel</button></div>
+    <p class="msg" id="rqmsg" role="status"></p>
+  </form>
+</dialog>
 
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image"><img id="lbimg" alt=""><p id="lbcap"></p></div>
 
@@ -939,6 +1030,7 @@ $("#caps").innerHTML=CAPS.map(([t,p,sw,img,ev])=>`<div class="cap"><img src="${i
 
 /* full portfolio viewer */
 const NPAGES=22, pg=n=>`img/portfolio/p${String(n).padStart(2,"0")}.jpg`, th=n=>`img/portfolio/t${String(n).padStart(2,"0")}.jpg`;
+const BLURRED=new Set([7,8]);
 const SPREADS=[[1]]; for(let n=2;n<NPAGES;n+=2)SPREADS.push([n,n+1]); SPREADS.push([NPAGES]);
 const wide=matchMedia("(min-width:760px)");
 let BOOK=0;
@@ -946,7 +1038,7 @@ const views=()=>wide.matches?SPREADS:Array.from({length:NPAGES},(_,i)=>[i+1]);
 function drawBook(){
   const V=views(); BOOK=Math.max(0,Math.min(BOOK,V.length-1)); const cur=V[BOOK];
   $("#bookstage").className="book-stage"+(cur.length===1?" single":"");
-  $("#bookstage").innerHTML=cur.map(n=>`<img class="zoom" src="${pg(n)}" alt="Portfolio page ${n}" data-cap="Page ${n} of ${NPAGES}">`).join("");
+  $("#bookstage").innerHTML=cur.map(n=>BLURRED.has(n)?`<img class="rq-page" data-rq src="${pg(n)}" alt="Portfolio page ${n}: confidential, available on request" title="Request the full version">`:`<img class="zoom" src="${pg(n)}" alt="Portfolio page ${n}" data-cap="Page ${n} of ${NPAGES}">`).join("");
   $("#bookctr").textContent=cur.length>1?`Pages ${cur[0]}–${cur[1]} of ${NPAGES}`:`Page ${cur[0]} of ${NPAGES}`;
   $("#bprev").disabled=BOOK===0; $("#bnext").disabled=BOOK===V.length-1;
   $("#bookthumbs").innerHTML=V.map((v,k)=>`<button aria-label="Go to page ${v[0]}" aria-current="${k===BOOK}" data-k="${k}">${v.map(n=>`<img src="${th(n)}" alt="" loading="lazy">`).join("")}</button>`).join("");
@@ -956,10 +1048,36 @@ function drawBook(){
 }
 $("#bprev").onclick=()=>{BOOK--;drawBook();}; $("#bnext").onclick=()=>{BOOK++;drawBook();};
 wide.addEventListener("change",e=>{const page=(e.matches?Array.from({length:NPAGES},(_,i)=>[i+1]):SPREADS)[BOOK][0];BOOK=views().findIndex(v=>v.includes(page));drawBook();});
-addEventListener("keydown",e=>{if(!$("#lb").hidden||!$("#sheet").hidden)return;const r=$("#portfolio").getBoundingClientRect();
-  if(r.top>innerHeight*.6||r.bottom<innerHeight*.3)return;
+addEventListener("keydown",e=>{if(!$("#lb").hidden||!$("#sheet").hidden||$("#rq").open)return;
+  if(!$("#pf").open){const r=$("#portfolio").getBoundingClientRect();if(r.top>innerHeight*.6||r.bottom<innerHeight*.3)return;}
   if(e.key==="ArrowRight"&&!$("#bnext").disabled){BOOK++;drawBook();} if(e.key==="ArrowLeft"&&!$("#bprev").disabled){BOOK--;drawBook();}});
 drawBook();
+
+/* portfolio pop-up: the same viewer, moved into a full-screen dialog while it is open */
+const bookHome=$("#book").parentNode, bookNext=$("#book").nextSibling, lbHome=$("#lb").parentNode, lbNext=$("#lb").nextSibling;
+function openPortfolio(){if($("#pf").open)return;$("#pf .pf-in").append($("#book"));$("#pf").append($("#lb"));$("#pf").showModal();drawBook();$("#bnext").focus();}
+$("#pf").addEventListener("close",()=>{$("#lb").hidden=true;bookHome.insertBefore($("#book"),bookNext);lbHome.insertBefore($("#lb"),lbNext);drawBook();});
+$("#pf-close").onclick=()=>$("#pf").close();
+addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#pf").open&&!$("#lb").hidden){e.preventDefault();e.stopImmediatePropagation();$("#lb").hidden=true;}},true);
+document.addEventListener("click",e=>{if(e.metaKey||e.ctrlKey||e.shiftKey)return;const a=e.target.closest("[data-pf]");if(a){e.preventDefault();openPortfolio();}});
+
+/* request form. Paste a form-service URL (for example a Formspree endpoint) into endpoint to have
+   requests delivered automatically; while it is empty, the form opens a pre-written email instead. */
+const REQUEST={email:"amy_chen@gsd.harvard.edu",endpoint:""};
+document.addEventListener("click",e=>{if(e.target.closest("[data-rq]")&&!$("#rq").open){$("#rqmsg").textContent="";$("#rqclose").textContent="Cancel";$("#rq").showModal();}});
+$("#rqclose").onclick=()=>$("#rq").close();
+if(!REQUEST.endpoint)$("#rqsend").textContent="Write the email";
+$("#rqform").addEventListener("submit",async e=>{e.preventDefault();
+  const f=new FormData(e.target), v=k=>(f.get(k)||"").trim(); if(v("_gotcha"))return;
+  const done=m=>{$("#rqmsg").textContent=m;$("#rqclose").textContent="Close";};
+  if(!REQUEST.endpoint){
+    const body=`Hello Amy,\n\nI'd like to request the full version of your portfolio.\n\nName: ${v("name")}\nEmail: ${v("email")}\nOrganization: ${v("organization")}\nInterested in: ${v("interest")||"-"}\n`;
+    location.href=`mailto:${REQUEST.email}?subject=${encodeURIComponent("Portfolio request: "+v("name"))}&body=${encodeURIComponent(body)}`;
+    return done(`Your email app should open with the request written; press send there. If it doesn't, write to ${REQUEST.email}.`);}
+  $("#rqsend").disabled=true;
+  try{const r=await fetch(REQUEST.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});if(!r.ok)throw 0;e.target.reset();done("Thank you. Your request is on its way to me.");}
+  catch(_){done(`That didn't go through. Please write to ${REQUEST.email}.`);}
+  $("#rqsend").disabled=false;});
 /* selected work as tabs: one project at a time */
 (()=>{const region=document.querySelector(".selected-region"),nav=document.querySelector(".selected-jump");if(!region||!nav)return;
 const links=[...nav.querySelectorAll('a[href^="#"]')].filter(a=>{const el=document.getElementById(a.getAttribute("href").slice(1));return el&&el.classList.contains("selected-anchor");});
@@ -985,6 +1103,15 @@ links.forEach((a,k)=>{a.addEventListener("click",e=>{e.preventDefault();show(k,t
 region.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;show(+b.dataset.go,"force");history.replaceState(null,"","#"+panels[cur].id);});
 addEventListener("hashchange",fromHash);
 if(!fromHash())show(0);})();
+/* header newsletter panel: rotates every 6 seconds; stops on hover, focus, pause or reduced motion */
+(()=>{const nl=$("#nl"),sl=[...nl.querySelectorAll(".nl-slide")],ds=[...nl.querySelectorAll(".d")],pb=$("#nl-pause");
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;let k=0,paused=still,hold=false;
+function go(n){k=(n+sl.length)%sl.length;sl.forEach((s,i)=>s.classList.toggle("on",i===k));ds.forEach((d,i)=>d.setAttribute("aria-current",String(i===k)));}
+function set(p){paused=p;pb.textContent=p?"▶":"❚❚";pb.setAttribute("aria-label",p?"Start rotation":"Pause rotation");}
+ds.forEach((d,i)=>d.onclick=()=>{go(i);set(true);});pb.onclick=()=>set(!paused);set(paused);
+nl.addEventListener("mouseenter",()=>hold=true);nl.addEventListener("mouseleave",()=>hold=false);
+nl.addEventListener("focusin",()=>hold=true);nl.addEventListener("focusout",()=>hold=false);
+setInterval(()=>{if(!paused&&!hold&&!document.hidden&&!$("#pf").open&&!$("#rq").open)go(k+1);},6000);})();
 /* lightbox for any image marked .zoom */
 document.addEventListener("click",e=>{const im=e.target.closest("img.zoom");if(!im)return;
   $("#lbimg").src=im.currentSrc||im.src; $("#lbimg").alt=im.alt; $("#lbcap").textContent=im.dataset.cap||im.alt; $("#lb").hidden=false;});
