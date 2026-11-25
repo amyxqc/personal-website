@@ -144,6 +144,21 @@ html,body{overflow-x:clip}
 .selected-jump a{flex:0 0 auto;padding:6px 12px;border-radius:999px;color:var(--muted);font-size:13px;text-decoration:none}
 .selected-jump a:hover,.selected-jump a:focus-visible{background:var(--surface);color:var(--ink)}
 .selected-anchor{scroll-margin-top:190px}
+.about-top{margin-top:clamp(40px,6vw,80px)}
+.about .big+.big{margin-top:18px}
+.aims{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:24px 0 0}
+.aims div{background:var(--surface);border-radius:14px;padding:14px 16px}
+.aims b{display:block;font-weight:500;font-size:15px;margin-bottom:4px}
+.aims span{font-size:14px;line-height:1.45;color:var(--muted)}
+.about-cta{margin:20px 0 0;font-size:16px;line-height:1.5}
+.about-cta a{color:var(--accent)}
+.tabs-on .selected-anchor:not(.is-active){display:none}
+.tabs-on .selected-anchor.feat{margin-top:8px}
+.tabs-on .selected-jump a[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.sel-count{flex:0 0 auto;margin-left:auto;padding:0 10px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.sel-pager{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:16px;border-top:1px solid var(--line)}
+.sel-pager button{max-width:48%}
+.band .sel-pager{border-color:var(--line)}
 .process-intro{max-width:76ch;margin:-4px 0 24px;color:var(--muted);font-size:17px;line-height:1.6}
 .award-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
 .award-row span{border-radius:999px;padding:6px 12px;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:11.5px;line-height:1.4}
@@ -260,7 +275,7 @@ html,body{overflow-x:clip}
 #lb p{color:#cfd5db;margin:0;font-size:14.5px;text-align:center;max-width:80ch}
 @media (max-width:860px){
   .feat .cols,.lenses,.story{grid-template-columns:1fr}
-  .princ,.flood,.award-photos{grid-template-columns:1fr}
+  .princ,.flood,.award-photos,.aims{grid-template-columns:1fr}
   .lens-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
   .story .stage{display:none}
   .story .step{min-height:0;opacity:1;padding:18px 0}
@@ -272,7 +287,7 @@ html,body{overflow-x:clip}
 <div class="wrap">
 <nav class="top">
   <a class="name" href="#top">Amy X. Chen</a>
-  <div class="links"><a href="#selected">Selected work</a><a href="#process">How I work</a><a href="#capabilities">Capabilities</a><a href="#portfolio">Portfolio</a><a href="#work">Index</a><a href="#about">About</a>
+  <div class="links"><a href="#about">About</a><a href="#selected">Selected work</a><a href="#process">How I work</a><a href="#capabilities">Capabilities</a><a href="#portfolio">Portfolio</a><a href="#work">Index</a>
     <a class="pill" href="mailto:amy_chen@gsd.harvard.edu">Get in touch</a></div>
 </nav>
 </div>
@@ -280,15 +295,41 @@ html,body{overflow-x:clip}
 <div class="wrap">
 <header class="hero" id="top">
   <div class="art" aria-hidden="true"><img src="img/hero-fontainebleau.png" alt=""></div>
-  <p class="eyebrow">Urban analytics · Spatial data science · Harvard GSD</p>
+  <p class="eyebrow">Urban analytics · Spatial AI · Harvard GSD</p>
   <h1>I use spatial data to inform urban planning, policy, and investment decisions.</h1>
-  <p class="sub">Trained in architecture, then economics and mathematics, now urban planning at Harvard GSD. I start from the people a tool is for and the decision they face, then build the analysis, the maps and the story that make the answer usable. My work covers flood resilience, mobility, infrastructure and civic AI, and I want to help lead urban analytics as it shapes the future of cities.</p>
-  <div class="ctas"><a class="pill" href="#selected">See selected work</a><a class="pill ghost" href="#portfolio">Full portfolio</a><a class="pill ghost" href="#capabilities">What I bring</a><a class="pill ghost" href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a></div>
+  <p class="sub">Master in Urban Planning candidate at Harvard GSD, concentrating in urban analytics. I started in art and architecture, studied economics and mathematical probability at Columbia, and have lived in Hangzhou, Auckland, New York and now Cambridge. I build spatial evidence, and increasingly spatial AI, that people can trust when they decide what happens to a city.</p>
+  <div class="ctas"><a class="pill" href="#selected">See selected work</a><a class="pill ghost" href="#about">Why I do this</a><a class="pill ghost" href="#portfolio">Full portfolio</a><a class="pill ghost" href="#capabilities">What I bring</a><a class="pill ghost" href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a></div>
 </header>
+
+<section id="about" class="about-top">
+  <div class="sh"><h2>Why I do this</h2><p>Urban analytics and spatial AI researcher. GeoAI, agent ground truth and spatial benchmarks.</p></div>
+  <div class="about">
+    <div>
+    <p class="big">I came to planning from art and architecture. Drawing buildings showed me that the questions I cared about sat at the scale of the city: how housing, streets, water and energy are tied together, and who carries the cost when one of them fails. I studied economics and mathematical probability at Columbia to answer those questions with evidence. Living in Hangzhou, Auckland, New York and Cambridge showed me that every city answers them differently, and keeps me open to what works elsewhere.</p>
+    <p class="big">Now I apply econometrics, network science and machine learning to real estate, infrastructure and climate systems. More and more, my focus is GeoAI alignment: making sure the spatial algorithms and autonomous agents we put into the physical world are safe, equitable and aligned with human values, with ground truth and benchmarks that show it. Every number in my tools traces to a source, and value judgements stay with the people who have standing to make them.</p>
+    <div class="aims" aria-label="What I want this work to move">
+      <div><b>Energy transition</b><span>Speed up the shift to clean energy, from the grid to the building.</span></div>
+      <div><b>Vision Zero</b><span>Streets where no one is killed or seriously hurt in traffic.</span></div>
+      <div><b>Equitable growth</b><span>Good jobs, resilient industries, healthy workplaces, better education and an end to poverty.</span></div>
+    </div>
+    <p class="about-cta">Always glad to meet researchers, planners and builders working on the future of cities and safe spatial AI. <a href="mailto:amy_chen@gsd.harvard.edu">Get in touch</a>.</p>
+    </div>
+    <ul class="facts">
+      <li><span>Now</span>Master in Urban Planning, Harvard GSD, 2026 to 2028</li>
+      <li><span>Before</span>BA in Economics and Mathematical Probability, Columbia, 2022 to 2026</li>
+      <li><span>Experience</span>Product Development Intern, Block Party: civic-technology tools that geotag messy datasets, built with PostgreSQL and product management · Innovation strategy, Mormedi · Policy research, Columbia Climate School</li>
+      <li><span>Also learning</span>Real estate certificate coursework, deepening how I examine development systems, incentives, outcomes and implementation</li>
+      <li><span>Also now</span>Research assistant, Healthy Places Design Lab · writing The Algorithmic Commons</li>
+      <li><span>Programs</span>Columbia Summer Undergraduate Research in Mathematical Modeling, 2024 · Carnegie Mellon Summer School in Logic and Formal Epistemology, 2025</li>
+      <li><span>Recognition</span>OASIS 2026 Winner Award, ACM SIGSPATIAL Student Challenge · Google DeepMind travel grant, ACM SIGSPATIAL 2026 · Marion Tournon-Branly Prize, Fontainebleau Schools of Fine Arts, 2023</li>
+      <li><span>Tools</span>Python (GeoPandas, OSMnx), QGIS, ArcGIS Pro, PostGIS, remote sensing (Landsat, LiDAR), Census data, network analysis, WebGL, Illustrator and InDesign, human-in-the-loop AI</li>
+    </ul>
+  </div>
+</section>
 
 <div class="selected-region">
 <section id="selected">
-  <div class="sh"><h2>Selected work</h2><p>Recent GIS, geospatial data engineering, geoprocessing and applied AI, alongside the planning work they inform.</p></div>
+  <div class="sh"><h2>Selected work</h2><p>Five projects: spatial AI, geospatial engineering, and the planning work they inform. Pick one.</p></div>
 </section>
 <nav class="selected-jump" aria-label="Jump to selected work">
   <a href="#flood-smart">Flood Smart Assistant</a>
@@ -416,13 +457,13 @@ html,body{overflow-x:clip}
   </div>
 <div class="wrap">
 <section id="portfolio">
-  <div class="sh"><h2>Full portfolio</h2><p>All 28 pages, as spreads. Click a page to enlarge it, or use the arrow keys. A few pages of client work are blurred; they are available on request.</p></div>
+  <div class="sh"><h2>Full portfolio</h2><p>All 22 pages, as spreads. Click a page to enlarge it, or use the arrow keys. Two pages of client work are blurred; they are available on request.</p></div>
   <div class="book">
     <div class="book-stage" id="bookstage"></div>
     <div class="book-bar">
       <span class="ctr" id="bookctr" aria-live="polite"></span>
       <div class="nav"><button class="pill ghost" id="bprev" aria-label="Previous pages">←</button><button class="pill ghost" id="bnext" aria-label="Next pages">→</button></div>
-      <a class="pill" href="Amy-X-Chen-Portfolio.pdf" download="Amy X. Chen Portfolio.pdf">Download PDF (12 MB)</a>
+      <a class="pill" href="Amy-X-Chen-Portfolio.pdf" download="Amy X. Chen Portfolio.pdf">Download PDF (9 MB)</a>
     </div>
     <div class="book-thumbs" id="bookthumbs" aria-label="Jump to a page"></div>
   </div>
@@ -462,23 +503,7 @@ html,body{overflow-x:clip}
   <div class="grid" id="grid"></div>
 </section>
 
-<section id="about">
-  <div class="sh"><h2>About</h2></div>
-  <div class="about">
-    <p class="big">I came to planning from architecture. Drawing buildings showed me that the questions I cared about sat at the scale of the city: how its housing, streets, water and energy are tied together, and who carries the cost when one of them fails. I studied economics and mathematical probability at Columbia to answer those questions with evidence, and I now study urban planning at the Harvard Graduate School of Design, working in urban analytics and spatial data science.</p>
-    <p class="big">My strength is combining a planner's view of institutions, incentives and implementation with a spatial analyst's ability to build and interrogate evidence. I connect people, policies, infrastructure and place to ask sharper questions and find where action can shift outcomes. Before I build anything I ask who will use the answer, what decision they face and which insight would change it. Every number in my tools traces to a source; value judgements stay with the people who have standing to make them. I want to help cities turn rigorous, legible evidence into progress in the real world.</p>
-    <ul class="facts">
-      <li><span>Now</span>Master in Urban Planning, Harvard GSD, 2026 to 2028</li>
-      <li><span>Before</span>BA in Economics and Mathematical Probability, Columbia, 2022 to 2026</li>
-      <li><span>Also learning</span>Real estate certificate coursework, deepening how I examine development systems, incentives, outcomes and implementation</li>
-      <li><span>Also now</span>Research assistant, Healthy Places Design Lab · writing The Algorithmic Commons</li>
-      <li><span>Programs</span>Columbia Summer Undergraduate Research in Mathematical Modeling, 2024 · Carnegie Mellon Summer School in Logic and Formal Epistemology, 2025</li>
-      <li><span>Recognition</span>OASIS 2026 Winner Award, ACM SIGSPATIAL Student Challenge · Google DeepMind travel grant, ACM SIGSPATIAL 2026 · Marion Tournon-Branly Prize, Fontainebleau Schools of Fine Arts, 2023</li>
-      <li><span>I do</span>User research and problem framing · spatial analysis and modeling · data visualization and storytelling · public presentation</li>
-      <li><span>Tools</span>Python (GeoPandas, OSMnx), QGIS, ArcGIS Pro, PostGIS, remote sensing (Landsat, LiDAR), Census data, network analysis, WebGL, Illustrator and InDesign, human-in-the-loop AI</li>
-    </ul>
-  </div>
-</section>
+
 
 <footer>
   <span>Amy X. Chen · amy_chen@gsd.harvard.edu · Hero drawing: Château de Fontainebleau, ink, 2023</span>
@@ -913,7 +938,7 @@ $("#caps").innerHTML=CAPS.map(([t,p,sw,img,ev])=>`<div class="cap"><img src="${i
 
 
 /* full portfolio viewer */
-const NPAGES=28, pg=n=>`img/portfolio/p${String(n).padStart(2,"0")}.jpg`, th=n=>`img/portfolio/t${String(n).padStart(2,"0")}.jpg`;
+const NPAGES=22, pg=n=>`img/portfolio/p${String(n).padStart(2,"0")}.jpg`, th=n=>`img/portfolio/t${String(n).padStart(2,"0")}.jpg`;
 const SPREADS=[[1]]; for(let n=2;n<NPAGES;n+=2)SPREADS.push([n,n+1]); SPREADS.push([NPAGES]);
 const wide=matchMedia("(min-width:760px)");
 let BOOK=0;
@@ -935,6 +960,31 @@ addEventListener("keydown",e=>{if(!$("#lb").hidden||!$("#sheet").hidden)return;c
   if(r.top>innerHeight*.6||r.bottom<innerHeight*.3)return;
   if(e.key==="ArrowRight"&&!$("#bnext").disabled){BOOK++;drawBook();} if(e.key==="ArrowLeft"&&!$("#bprev").disabled){BOOK--;drawBook();}});
 drawBook();
+/* selected work as tabs: one project at a time */
+(()=>{const region=document.querySelector(".selected-region"),nav=document.querySelector(".selected-jump");if(!region||!nav)return;
+const links=[...nav.querySelectorAll('a[href^="#"]')].filter(a=>{const el=document.getElementById(a.getAttribute("href").slice(1));return el&&el.classList.contains("selected-anchor");});
+const panels=links.map(a=>document.getElementById(a.getAttribute("href").slice(1)));if(!panels.length)return;
+region.classList.add("tabs-on");nav.setAttribute("role","tablist");
+const count=document.createElement("span");count.className="sel-count";count.setAttribute("aria-live","polite");nav.appendChild(count);
+const name=a=>a.textContent.trim();
+panels.forEach((p,k)=>{p.setAttribute("role","tabpanel");links[k].setAttribute("role","tab");links[k].setAttribute("aria-controls",p.id);
+  const pager=document.createElement("div");pager.className="sel-pager";
+  const prev=links[(k-1+links.length)%links.length],next=links[(k+1)%links.length];
+  pager.innerHTML=`<button class="pill ghost" type="button" data-go="${k-1}">← ${name(prev)}</button><button class="pill" type="button" data-go="${k+1}">Next: ${name(next)} →</button>`;
+  (p.querySelector(".in")||p).appendChild(pager);});
+let cur=-1;
+function show(k,scroll){k=(k+panels.length)%panels.length;cur=k;
+  panels.forEach((p,i)=>p.classList.toggle("is-active",i===k));
+  links.forEach((a,i)=>{a.setAttribute("aria-selected",i===k?"true":"false");a.tabIndex=i===k?0:-1;});
+  count.textContent=`${k+1} / ${panels.length}`;
+  {const a=links[k];if(a.offsetLeft<nav.scrollLeft||a.offsetLeft+a.offsetWidth>nav.scrollLeft+nav.clientWidth)nav.scrollLeft=a.offsetLeft-12;}
+  if(scroll){const top=document.getElementById("selected").getBoundingClientRect().top+scrollY-70;if(scrollY>top+40||scroll==="force")scrollTo({top,behavior:"smooth"});}}
+function fromHash(){const k=panels.findIndex(p=>"#"+p.id===location.hash);if(k>=0){show(k);setTimeout(()=>panels[k].scrollIntoView({block:"start"}),0);return true;}return false;}
+links.forEach((a,k)=>{a.addEventListener("click",e=>{e.preventDefault();show(k,true);history.replaceState(null,"","#"+panels[k].id);});
+  a.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();show(cur+(e.key==="ArrowRight"?1:-1));links[cur].focus();}});});
+region.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;show(+b.dataset.go,"force");history.replaceState(null,"","#"+panels[cur].id);});
+addEventListener("hashchange",fromHash);
+if(!fromHash())show(0);})();
 /* lightbox for any image marked .zoom */
 document.addEventListener("click",e=>{const im=e.target.closest("img.zoom");if(!im)return;
   $("#lbimg").src=im.currentSrc||im.src; $("#lbimg").alt=im.alt; $("#lbcap").textContent=im.dataset.cap||im.alt; $("#lb").hidden=false;});
