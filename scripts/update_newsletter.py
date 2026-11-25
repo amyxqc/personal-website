@@ -110,4 +110,8 @@ def main():
     print("updated" if new != old else "no change", [p[1] for p in found])
 
 
-main()
+try:
+    main()
+except Exception as err:  # shown on the workflow run page
+    print(f"::error::Newsletter refresh failed, index.html left unchanged: {type(err).__name__}: {err}")
+    sys.exit(1)
