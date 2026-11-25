@@ -1,4 +1,4 @@
-/* The name as fifteen small physics simulations. Change their order in ORDER and how long each holds (seconds) in HOLD.
+/* The name as twenty small simulations, from physics, the social sciences and music. Change their order in ORDER and how long each holds (seconds) in HOLD.
    One round plays, then the name rests in ink; the header moves on again when it comes back into view. */
 (()=>{const host=document.querySelector("#nm"),MODE="collide";if(!host||!window.NAME||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
 const W=900,H=300,SC=(W-90)/NAME.w,OX=45,OY=(H-NAME.h*SC)/2,cv=document.createElement("canvas"),x=cv.getContext("2d"),still=false;cv.setAttribute("aria-hidden","true");host.append(cv);host.classList.add("live");
@@ -156,13 +156,78 @@ chladni:{
  draw(){for(const s of this.g){const q=Math.min(1,s.a*1.2);x.fillStyle=css(mix(C.ink,C.acc,q),1-.35*q);x.fillRect(s.x-1.05,s.y-1.05,2.1,2.1);}},
  tap(){const o=[[2,3],[3,5],[1,4],[4,5],[2,5],[3,4]];[this.n,this.m]=o[(R()*o.length)|0];this.note=2.6;}}};
 Object.assign(M,NEWM);
+/* social science models */
+let NBC=null;const NB=()=>NBC||(NBC=P.map((p,i)=>{const o=[];for(let j=0;j<N;j++)if(j!==i&&(P[j].tx-p.tx)**2+(P[j].ty-p.ty)**2<576)o.push(j);return o;}));
+const ease=u=>u*u*(3-2*u);
+const SOC={
+/* agglomeration: being near others pays, so people gather into cities, until crowding pushes back; big ones keep growing */
+agglom:{gw:90,gh:30,
+ start(again){P.forEach(p=>{p.x=again?p.tx+rn()*34:20+R()*(W-40);p.y=12+R()*(H-24);if(again)p.x=cl(p.x,10,W-10);p.vx=p.vy=0;p.home=0;p.dl=3.7+p.tx/W*1.1+R()*.25;p.dn=0;});this.wd=new Float32Array(2700);this.nr=new Float32Array(2700);this.tmp=new Float32Array(2700);this.pk=[];this.boom=null;},
+ blur(a,r){const w=this.gw,h=this.gh,b=this.tmp;for(let j=0;j<h;j++){let s=0;for(let i=-r;i<=r;i++)s+=a[j*w+cl(i,0,w-1)];for(let i=0;i<w;i++){b[j*w+i]=s/(2*r+1);s+=a[j*w+Math.min(w-1,i+r+1)]-a[j*w+Math.max(0,i-r)];}}for(let i=0;i<w;i++){let s=0;for(let j=-r;j<=r;j++)s+=b[cl(j,0,h-1)*w+i];for(let j=0;j<h;j++){a[j*w+i]=s/(2*r+1);s+=b[Math.min(h-1,j+r+1)*w+i]-b[Math.max(0,j-r)*w+i];}}},
+ step(dt,t){const w=this.gw,h=this.gh;let e=0;if(t<5.4){this.nr.fill(0);for(const p of P)if(t<p.dl)this.nr[cl((p.y/10)|0,0,h-1)*w+cl((p.x/10)|0,0,w-1)]++;this.wd.set(this.nr);this.blur(this.wd,2);this.blur(this.wd,2);this.blur(this.nr,1);}
+  if(this.boom&&(this.boom.l-=dt)<0)this.boom=null;const at=(f,i,j)=>f[cl(j,0,h-1)*w+cl(i,0,w-1)];
+  for(const p of P){if(t<p.dl){const i=cl((p.x/10)|0,0,w-1),j=cl((p.y/10)|0,0,h-1),wv=at(this.wd,i,j)+.02;p.dn+=((at(this.nr,i,j))-p.dn)*.1;let ax=(at(this.wd,i+1,j)-at(this.wd,i-1,j))/wv*430-(at(this.nr,i+1,j)-at(this.nr,i-1,j))*34,ay=(at(this.wd,i,j+1)-at(this.wd,i,j-1))/wv*430-(at(this.nr,i,j+1)-at(this.nr,i,j-1))*34;
+    const b=this.boom||ptr;if(b){const dx=b.x-p.x,dy=b.y-p.y,d=Math.hypot(dx,dy)+30;if(d<260){const f=(this.boom?900:420)/d;ax+=dx*f;ay+=dy*f;}}
+    p.vx+=(ax+rn()*130-p.vx*3.2)*dt;p.vy+=(ay+rn()*130-p.vy*3.2)*dt;const v=Math.hypot(p.vx,p.vy);if(v>210){p.vx*=210/v;p.vy*=210/v;}e=1;}
+   else{const ax=-74*(p.x-p.tx)-13*p.vx,ay=-74*(p.y-p.ty)-13*p.vy;p.home=Math.min(1,p.home+dt*1.1);p.vx+=ax*dt;p.vy+=ay*dt;if(Math.abs(p.vx)+Math.abs(p.vy)>1||p.home<1)e=1;}
+   p.x=cl(p.x+p.vx*dt,4,W-4);p.y=cl(p.y+p.vy*dt,4,H-4);}
+  return e;},
+ draw(t){const w=this.gw,h=this.gh,k=cl((t-.9)/1.2)*(1-cl((t-3.7)/1.2));if(k>0){x.strokeStyle=css(C.acc,.5*k);for(let j=1;j<h-1;j++)for(let i=1;i<w-1;i++){const v=this.wd[j*w+i];if(v<.55)continue;let top=true;for(let b=-2;b<=2&&top;b++)for(let a=-2;a<=2;a++)if((a||b)&&this.wd[cl(j+b,0,h-1)*w+cl(i+a,0,w-1)]>v){top=false;break;}if(!top)continue;const X=i*10+5,Y=j*10+5,r=8+Math.sqrt(v)*17,g=x.createRadialGradient(X,Y,0,X,Y,r*1.5);g.addColorStop(0,css(C.hot,.3*k));g.addColorStop(.5,css(C.acc,.12*k));g.addColorStop(1,css(C.acc,0));x.fillStyle=g;x.beginPath();x.arc(X,Y,r*1.5,0,6.3);x.fill();}}
+  x.lineCap="round";for(const s of ST)for(let i=1;i<s.length;i++){const a=P[s[i-1]],b=P[s[i]],q=Math.min(a.home,b.home);if(q<.35)continue;const d=Math.hypot(a.x-b.x,a.y-b.y);if(d>16)continue;x.strokeStyle=css(C.ink,cl((q-.35)/.5));x.lineWidth=a.r+b.r;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}
+  for(const p of P){if(p.home>0){dot(p,css(mix(C.acc,C.ink,p.home)));continue;}x.fillStyle=css(mix(mix(C.mut,C.acc,cl(p.dn/1.6)),C.hot,cl((p.dn-1.8)/2.4)),.9);x.beginPath();x.arc(p.x,p.y,2,0,6.3);x.fill();}},
+ tap(a,b){this.boom={x:a,y:b,l:1.1};}},
+/* Schelling 1971: everyone is content as a bit more than half of their neighbors are like them, and the whole name sorts anyway */
+schelling:{start(){toName();this.nb=NB();this.g=new Uint8Array(N);this.hold=new Uint8Array(N);this.vac=[];this.mv=[];this.q=0;for(let i=0;i<N;i++){if(R()<.08)this.vac.push(i);else this.g[i]=R()<.5?1:2;}},
+ sad(i,g){let s=0,k=0;for(const j of this.nb[i]){const h=this.g[j];if(h){k++;if(h===g)s++;}}return k>0&&s/k<.56;},
+ step(dt,t){if(t>.7&&t<5.3){this.q+=dt*(N*1.5);while(this.q>1){this.q--;const i=(R()*N)|0,g=this.g[i];if(!g||this.hold[i]||!this.sad(i,g))continue;for(let k=0;k<16;k++){const v=(R()*this.vac.length)|0,b=this.vac[v];if(this.sad(b,g))continue;this.vac[v]=i;this.g[i]=0;this.g[b]=g;this.hold[b]=1;this.mv.push({g,a:i,b,u:0,h:(R()-.5)*90});break;}}}
+  for(const m of this.mv){m.u+=dt/.55;if(m.u>=1)this.hold[m.b]=0;}this.mv=this.mv.filter(m=>m.u<1);return t<7.2||this.mv.length?1:0;},
+ draw(t){const k=cl((t-5.7)/1.2),c=[C.mut,C.acc,C.hot];for(const s of ST)for(let i=1;i<s.length;i++){const a=s[i-1],b=s[i];if(this.g[a]&&this.g[a]===this.g[b]&&!this.hold[a]&&!this.hold[b]){x.strokeStyle=css(c[this.g[a]],.35*(1-k));x.lineWidth=P[a].r+P[b].r;x.lineCap="round";x.beginPath();x.moveTo(P[a].tx,P[a].ty);x.lineTo(P[b].tx,P[b].ty);x.stroke();}}
+  P.forEach((p,i)=>{if(this.hold[i]||!this.g[i]){x.strokeStyle=css(C.mut,.4*(1-k));x.lineWidth=.8;x.beginPath();x.arc(p.tx,p.ty,2.2,0,6.3);x.stroke();return;}x.fillStyle=css(c[this.g[i]],1-k);x.beginPath();x.arc(p.tx,p.ty,Math.max(3.1,p.r*.95),0,6.3);x.fill();});
+  for(const m of this.mv){const a=P[m.a],b=P[m.b],u=ease(m.u),X=a.tx+(b.tx-a.tx)*u,Y=a.ty+(b.ty-a.ty)*u+Math.sin(u*3.14)*m.h;x.fillStyle=css(c[m.g],.95);x.beginPath();x.arc(X,Y,3,0,6.3);x.fill();}named(k);},
+ tap(a,b){if((performance.now()-t0)/1000>5)this.start();t0=performance.now()-650;P.forEach((p,i)=>{if(this.g[i]&&!this.hold[i]&&Math.hypot(p.tx-a,p.ty-b)<150)this.g[i]=R()<.5?1:2;});}},
+/* diffusion of ideas: each adopter tells neighbors; a few long ties let an idea jump between groups, and adoption draws an S */
+diffuse:{start(){toName();this.seed(P.reduce((m,p,i)=>p.tx<P[m].tx?i:m,0));},
+ seed(i){this.nb=NB();this.at=new Float32Array(N).fill(-1);this.at[i]=.5;this.n=1;this.arc=[];this.cv=[];this.tie=new Map();for(let k=0;k<46;k++){const a=(R()*N)|0,b=(R()*N)|0;if(Math.abs(P[a].tx-P[b].tx)>90){(this.tie.get(a)||this.tie.set(a,[]).get(a)).push(b);(this.tie.get(b)||this.tie.set(b,[]).get(b)).push(a);}}},
+ step(dt,t){if(t>.5&&this.n<N){const add=[];for(let i=0;i<N;i++){if(this.at[i]>=0&&this.at[i]<t-.06){const T=this.tie.get(i);if(T)for(const j of T)if(this.at[j]<0&&R()<dt*.22)add.push([i,j,1]);continue;}if(this.at[i]>=0)continue;let k=0;for(const j of this.nb[i])if(this.at[j]>=0&&this.at[j]<t-.06)k++;if(k&&R()<1-Math.exp(-dt*k*1.15)||t>5.3&&R()<dt*9)add.push([-1,i,0]);}
+   for(const[a,b,f]of add){if(this.at[b]>=0)continue;this.at[b]=t;this.n++;if(f)this.arc.push({a,b,t});}}
+  if(t<7&&(!this.cv.length||t-this.cv[this.cv.length-1][0]>.06))this.cv.push([t,this.n/N]);return t<7.4?1:0;},
+ draw(t){const k=cl((t-6)/1.1);for(const a of this.arc){const q=1-(t-a.t)/1.1;if(q<=0)continue;const p=P[a.a],r=P[a.b],g=x.createLinearGradient(p.tx,p.ty,r.tx,r.ty);g.addColorStop(0,css(C.acc,.1*q));g.addColorStop(1,css(C.hot,.9*q));x.strokeStyle=g;x.lineWidth=1.5;x.beginPath();x.moveTo(p.tx,p.ty);x.quadraticCurveTo((p.tx+r.tx)/2,Math.min(p.ty,r.ty)-60-Math.abs(p.tx-r.tx)*.08,r.tx,r.ty);x.stroke();}
+  x.lineCap="round";for(const s of ST)for(let i=1;i<s.length;i++){const a=s[i-1],b=s[i],u=Math.min(this.at[a],this.at[b]);if(u<0)continue;x.strokeStyle=css(C.acc,cl((t-u)/.5)*(1-k));x.lineWidth=P[a].r+P[b].r;x.beginPath();x.moveTo(P[a].tx,P[a].ty);x.lineTo(P[b].tx,P[b].ty);x.stroke();}
+  P.forEach((p,i)=>{const u=this.at[i];if(u<0){x.fillStyle=css(C.mut,.38);x.beginPath();x.arc(p.tx,p.ty,1.7,0,6.3);x.fill();return;}const f=cl(1-(t-u)/.6);x.fillStyle=css(mix(C.acc,C.hot,f),1-k);x.beginPath();x.arc(p.tx,p.ty,p.r+f*3,0,6.3);x.fill();});
+  const z=(1-k)*cl(t/.8);if(z>0&&this.cv.length>1){const X=W-176,Y=66,f=q=>[X+Math.min(1,q[0]/6.2)*150,Y-q[1]*40];x.strokeStyle=css(C.mut,.35*z);x.lineWidth=1;x.beginPath();x.moveTo(X,Y);x.lineTo(X+150,Y);x.stroke();x.strokeStyle=css(C.hot,.95*z);x.lineWidth=2;x.beginPath();this.cv.forEach((q,i)=>{const a=f(q);i?x.lineTo(...a):x.moveTo(...a);});x.stroke();}named(k);},
+ tap(a,b){t0=performance.now()-420;this.seed(P.reduce((m,p,i)=>Math.hypot(p.tx-a,p.ty-b)<Math.hypot(P[m].tx-a,P[m].ty-b)?i:m,0));}},
+/* city growth: streets reach toward the people not yet connected, and the busiest ones widen into avenues */
+growth:{start(){toName();this.grow([[R()*60+150,150+R()*30],[R()*60+440,150+R()*40],[R()*60+740,150+R()*30]]);},
+ grow(sd){this.nd=sd.map(([X,Y])=>({x:X,y:Y,p:-1,w:0,t:0,k:[]}));this.A=P.map(p=>[p.tx,p.ty]);for(let k=0;k<300;k++)this.A.push([24+R()*(W-48),18+R()*(224)]);const n=this.A.length;this.near=new Int32Array(n).fill(-1);this.nd2=new Float32Array(n).fill(1e9);this.hit=new Float32Array(n).fill(-1);this.q=0;this.from=0;},
+ scan(){for(let m=this.from;m<this.nd.length;m++){const n=this.nd[m];for(let i=0;i<this.A.length;i++){if(this.hit[i]>=0)continue;const d=(this.A[i][0]-n.x)**2+(this.A[i][1]-n.y)**2;if(d<this.nd2[i]){this.nd2[i]=d;this.near[i]=m;}}}this.from=this.nd.length;},
+ it(t){this.scan();const g=new Map();for(let i=0;i<this.A.length;i++){if(this.hit[i]>=0)continue;if(this.nd2[i]<64){this.hit[i]=t;for(let m=this.near[i];m>=0;m=this.nd[m].p)this.nd[m].w++;continue;}if(this.nd2[i]>95*95)continue;const n=this.nd[this.near[i]],d=Math.sqrt(this.nd2[i]),v=g.get(this.near[i])||g.set(this.near[i],[0,0]).get(this.near[i]);v[0]+=(this.A[i][0]-n.x)/d;v[1]+=(this.A[i][1]-n.y)/d;}
+  for(const[m,v]of g){const n=this.nd[m],L=Math.hypot(...v)||1,X=n.x+v[0]/L*7+rn()*.5,Y=n.y+v[1]/L*7+rn()*.5;if(n.k.length>3||n.k.some(c=>Math.hypot(this.nd[c].x-X,this.nd[c].y-Y)<2.4))continue;n.k.push(this.nd.length);this.nd.push({x:X,y:Y,p:m,w:0,t,k:[]});}},
+ step(dt,t){if(t<5.8&&this.nd.length<3200){this.q+=dt*(t<1?9:13);while(this.q>1){this.q--;this.it(t);}}return t<7.4?1:0;},
+ draw(t){const k=cl((t-5.8)/1.2),z=1-k;x.lineCap="round";if(z>0)for(const n of this.nd){if(n.p<0){x.fillStyle=css(C.hot,z);x.beginPath();x.arc(n.x,n.y,5,0,6.3);x.fill();continue;}const a=this.nd[n.p],q=cl(Math.sqrt(n.w)/17),u=cl((t-n.t)/.16);x.strokeStyle=css(mix(C.mut,C.acc,cl(q*2.2+.15)),z*(.45+.5*q));x.lineWidth=.8+q*4.6;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(a.x+(n.x-a.x)*u,a.y+(n.y-a.y)*u);x.stroke();}
+  x.lineCap="round";for(const s of ST)for(let i=1;i<s.length;i++){const a=s[i-1],b=s[i],u=Math.max(this.hit[a],this.hit[b]);if(this.hit[a]<0||this.hit[b]<0)continue;x.strokeStyle=css(C.ink,cl((t-u)/.6));x.lineWidth=P[a].r+P[b].r;x.beginPath();x.moveTo(P[a].tx,P[a].ty);x.lineTo(P[b].tx,P[b].ty);x.stroke();}
+  P.forEach((p,i)=>{const u=this.hit[i];if(u<0){x.fillStyle=css(C.mut,.3);x.beginPath();x.arc(p.tx,p.ty,1.5,0,6.3);x.fill();}else{const f=cl(1-(t-u)/.5);if(f>0){x.fillStyle=css(C.hot,f);x.beginPath();x.arc(p.tx,p.ty,p.r+2*f,0,6.3);x.fill();}}});named(k);},
+ tap(a,b){t0=performance.now();this.grow([[a,b]]);}}};
+Object.assign(M,SOC);
+/* music: jazz */
+const MUS={
+/* swing: Kuramoto's coupled oscillators. Everyone starts with their own tempo; listening to neighbors pulls the band into one swung beat */
+swing:{start(){toName();this.nb=NB();this.th=Float32Array.from({length:N},()=>R()*6.283);this.om=Float32Array.from({length:N},()=>6.9*(1+rn()*.13));this.nx=new Float32Array(N);},
+ hit(h){const u=((h%6.283)+6.283)%6.283/6.283,e=u<.667?u:u-.667,g=u<.667?1:.62;return g*Math.exp(-e*7);},
+ step(dt,t){const K=cl((t-.7)/2.2)*7,G=cl((t-2)/2)*2.4;let sx=0,sy=0;for(let i=0;i<N;i++){sx+=Math.cos(this.th[i]);sy+=Math.sin(this.th[i]);}const psi=Math.atan2(sy,sx);this.r=Math.hypot(sx,sy)/N;
+  for(let i=0;i<N;i++){const nb=this.nb[i];let s=0;for(const j of nb)s+=Math.sin(this.th[j]-this.th[i]);let w=this.om[i]+(nb.length?K*s/nb.length:0)+G*this.r*Math.sin(psi-P[i].tx/W*2.2-this.th[i]);if(ptr){const d=Math.hypot(P[i].tx-ptr.x,P[i].ty-ptr.y);if(d<90)w+=9*(1-d/90);}this.nx[i]=this.th[i]+w*dt;}
+  this.th.set(this.nx);return t<8?1:0;},
+ draw(t){const k=cl((t-6.3)/1.2),z=1-k,gold=dark()?[255,205,96]:[226,150,20];if(dark()&&z>0)for(let j=0;j<3;j++){const X=W*(.2+.3*j)+Math.sin(t*.8+j*2)*50,g=x.createRadialGradient(X,150,0,X,150,150);g.addColorStop(0,css(j===1?C.hot:gold,.13*z));g.addColorStop(1,css(gold,0));x.fillStyle=g;x.fillRect(X-150,0,300,H);}
+  x.lineCap="round";const at=i=>{const h=this.hit(this.th[i]);return[P[i].tx,P[i].ty-h*15*z,h];};for(const s of ST){let l=null;for(const i of s){const[a,b,h]=at(i),c=mix(mix(C.ink,C.acc,.75*z),h>.5?C.hot:gold,cl(h*1.5)*z);x.strokeStyle=x.fillStyle=css(c);const r=P[i].r*(1+h*.35*z);if(l){x.lineWidth=r+l[2];x.beginPath();x.moveTo(l[0],l[1]);x.lineTo(a,b);x.stroke();}else if(s.length===1){x.beginPath();x.arc(a,b,r,0,6.3);x.fill();}l=[a,b,r];}}
+  if(z>0)for(let i=0;i<N;i+=3){const[a,b,h]=at(i);if(h<.72)continue;x.fillStyle=css(gold,(h-.7)*2.4*z);x.beginPath();x.arc(a,b-9-(1-h)*26,1.9,0,6.3);x.fill();}},
+ tap(a,b){for(let i=0;i<N;i++)if(Math.hypot(P[i].tx-a,P[i].ty-b)<150)this.th[i]=R()*6.283;if((performance.now()-t0)/1000>3.2)t0=performance.now()-2600;}}};
+Object.assign(M,MUS);
 function size(){const d=Math.min(2,devicePixelRatio||1),r=cv.getBoundingClientRect();cv.width=r.width*d;cv.height=r.width*d*H/W;look();paint();}
 const snap=document.createElement("canvas");let fade=0;
 function paint(){x.setTransform(cv.width/W,0,0,cv.width/W,0,0);x.clearRect(0,0,W,H);M[mode].draw((performance.now()-t0)/1000);if(fade>0&&snap.width){x.globalAlpha=fade;x.drawImage(snap,0,0,W,H);x.globalAlpha=1;}}
 function frame(n){raf=0;if(!seen||document.hidden){last=0;return;}const dt=Math.min(.033,last?(n-last)/1000:.016);last=n;const t=(performance.now()-t0)/1000;fade=Math.max(0,fade-dt/.45);let e=0;for(let k=0;k<2;k++)e=M[mode].step(dt/2,t)||e;paint();if(e||ptr||t<3||fade>0)go();else last=0;}
 const go=()=>{if(!raf)raf=requestAnimationFrame(frame);};
-const LABEL={collide:"Collider",aurora:"Aurora",gravity:"Gravity model",symmetry:"Symmetry breaking",quantum:"Quantum wave",soap:"Soap film",charge:"Electric charge",snow:"Snowflakes",action:"Least action",plasma:"Plasma",chladni:"Vibrating sand",cherenkov:"Cherenkov glow",anneal:"Molecules",irid:"Iridescence",ink:"Ink"};
-const ORDER=Object.keys(LABEL),HOLD={collide:7,aurora:9.8,gravity:7.4,symmetry:6.8,quantum:6.4,soap:6.8,charge:6.4,snow:7.4,action:6.4,plasma:7.6,chladni:8,cherenkov:7.2,anneal:7,irid:8.4,ink:8};
+const LABEL={collide:"Collider",gravity:"Gravity model",aurora:"Aurora",agglom:"Agglomeration",symmetry:"Symmetry breaking",schelling:"Segregation",quantum:"Quantum wave",growth:"City growth",soap:"Soap film",swing:"Jazz swing",diffuse:"Diffusion of ideas",charge:"Electric charge",snow:"Snowflakes",action:"Least action",plasma:"Plasma",chladni:"Vibrating sand",cherenkov:"Cherenkov glow",anneal:"Molecules",irid:"Iridescence",ink:"Ink"};
+const ORDER=Object.keys(LABEL),HOLD={swing:8.4,agglom:7.6,schelling:7.8,diffuse:8,growth:8,collide:7,aurora:9.8,gravity:7.4,symmetry:6.8,quantum:6.4,soap:6.8,charge:6.4,snow:7.4,action:6.4,plasma:7.6,chladni:8,cherenkov:7.2,anneal:7,irid:8.4,ink:8};
 const ui=document.createElement("div");ui.className="nm-ui";ui.setAttribute("role","group");ui.setAttribute("aria-label","Name animation");
 ui.innerHTML='<button type="button" data-go="-1" aria-label="Previous animation">\u2039</button><button type="button" class="pz" aria-label="Pause animations">\u275A\u275A</button><button type="button" data-go="1" aria-label="Next animation">\u203A</button><select aria-label="Choose an animation">'+ORDER.map(k=>`<option value="${k}">${LABEL[k]}</option>`).join("")+"</select>";host.after(ui);
 const sel=ui.querySelector("select");let paused=false,hold=false,shown=0,timer=0,from=1;try{from=+localStorage.getItem("nameNext")||1;}catch(_){}
@@ -177,5 +242,5 @@ ui.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
 sel.addEventListener("change",()=>{pause(true);set(sel.value,true);});
 const at=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.width*W};};
 cv.addEventListener("pointermove",e=>{const q=at(e),l=(v)=>Math.max(-270,Math.min(270,v));q.vx=ptr?l((q.x-ptr.x)*26):0;q.vy=ptr?l((q.y-ptr.y)*26):0;ptr=q;hold=true;go();});const off=()=>{ptr=null;hold=false;go();};cv.addEventListener("pointerleave",off);cv.addEventListener("pointercancel",off);cv.addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")off();});cv.addEventListener("click",e=>{const p=at(e);M[mode].tap(p.x,p.y);go();});
-let was=true;new IntersectionObserver(es=>{seen=es[0].isIntersecting;if(seen){go();if(!was&&!paused&&done()){shown=2;const k=ORDER[(Math.max(1,from)+0)%ORDER.length];from=from%(ORDER.length-2)+1;set(k,true);clearTimeout(timer);timer=setTimeout(()=>{if(!paused&&!hold)set("ink",true);},HOLD[k]*1000);}}was=seen;}).observe(cv);document.addEventListener("visibilitychange",go);onTheme(()=>{look();paint();});look();set(MODE,false);new ResizeObserver(size).observe(host);size();
+let was=true;new IntersectionObserver(es=>{seen=es[0].isIntersecting;if(seen){go();if(false){shown=2;const k=ORDER[(Math.max(1,from)+0)%ORDER.length];from=from%(ORDER.length-2)+1;set(k,true);clearTimeout(timer);timer=setTimeout(()=>{if(!paused&&!hold)set("ink",true);},HOLD[k]*1000);}}was=seen;}).observe(cv);document.addEventListener("visibilitychange",go);onTheme(()=>{look();paint();});look();set(MODE,false);new ResizeObserver(size).observe(host);size();
 })();
