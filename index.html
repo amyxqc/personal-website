@@ -300,6 +300,7 @@ html.m .kw{gap:6px}html.m .kw li{font-size:13px;padding:6px 11px 6px 9px;gap:6px
 .nm-ui .nf{border:0;background:none;padding:0;width:34px;height:34px;border-radius:50%;color:inherit;cursor:pointer;display:grid;place-items:center;opacity:.6}.nm-ui .nf:hover,.nm-ui .nf[aria-expanded=true]{opacity:1;color:var(--ink);background:var(--surface)}.nm-ui .nf svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
 .nm-pop{position:absolute;right:0;top:calc(100% + 6px);width:min(330px,calc(100vw - 40px));background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.16);padding:15px 18px 12px;text-align:left}.nm-pop[hidden]{display:none}.nm-pop b{font-family:var(--serif);font-weight:500;font-size:19px}.nm-pop p{margin:5px 0 8px;font-size:15px;line-height:1.5;color:var(--muted)}.nm-pop .pz{border:0;background:none;padding:6px 0;font:inherit;font-size:14px;color:var(--accent);cursor:pointer}
 .nm-ui button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.mailm{position:fixed;inset:auto;margin:0;z-index:60;min-width:200px;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:2px}.mailm:popover-open{display:flex}.mailm :is(a,button){display:block;text-align:left;font:inherit;font-size:15px;line-height:1.3;color:var(--ink);text-decoration:none;background:none;border:0;padding:10px 12px;border-radius:6px;cursor:pointer;user-select:text}.mailm :is(a,button):is(:hover,:focus-visible){background:var(--surface);outline:none}html.m .mailm :is(a,button){padding:13px 14px;font-size:16px}
 html.m .nm-ui .nf{width:44px;height:44px}html.m .nm-ui{margin:-6px -10px 0 0}html.m .nm-pop{right:10px;top:calc(100% + 2px)}
 .tagline,.kw{position:relative;z-index:1}
 .tagline{margin:10px 0 0;font-size:clamp(30px,3.4vw,42px);line-height:1.15;letter-spacing:-.018em;text-wrap:balance}
@@ -454,7 +455,7 @@ html.m #values .ev button{padding:11px 14px;font-size:14px}
 header.hero{padding-top:0!important}
 .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.16fr)!important;column-gap:clamp(30px,3.6vw,52px);row-gap:0;align-items:start}
 .hero-grid>div{display:contents}.hero-grid .nm{grid-area:1/1/2/-1;width:58%;max-width:none!important;padding:clamp(34px,4.6vw,66px) 0 clamp(18px,2.2vw,32px)}
-.hero-grid .nm-ui{grid-area:1/1/2/-1;justify-self:start;align-self:end;margin:0 0 clamp(16px,2vw,28px) calc(58% + 4px)}.hero-grid .nm-pop{right:auto;left:0}nav.top.has-nm .name{display:none}nav.top .bar-nm{display:flex;align-items:center;gap:0;position:relative}nav.top .bar-nm .nm{width:156px;flex:0 0 auto}nav.top .bar-nm .nm canvas{margin:calc(-100% * 0.0946) 0 calc(-100% * 0.0953) calc(-100% * 0.0704)}nav.top .bar-nm .nm-ui{margin:0 0 0 2px}nav.top .bar-nm .nm-ui .nf{width:30px;height:30px}nav.top .bar-nm .nm-ui .nf svg{width:18px;height:18px}nav.top .bar-nm .nm-pop{left:0;right:auto;top:calc(100% + 16px)}.hero-grid .tagline{grid-row:1/2!important;font-size:clamp(40px,4vw,56px)!important;margin-top:clamp(30px,4vw,60px)!important}.hero-grid .ctas{grid-row:1/2!important;align-self:end!important}.hero-grid .nm{z-index:0}.hero-grid .ctas a{white-space:nowrap}.hero-grid .nm-ui:has(.nm-pop:not([hidden])){z-index:5!important}.hero-grid :is(.ctas,.nm-ui,.kwrow,.col,.nl){position:relative;z-index:2}.hero-grid .tagline{grid-area:2/1/3/3;font-size:clamp(34px,3.3vw,44px);margin:clamp(12px,1.3vw,20px) 0 0}.hero-grid .ctas{grid-area:2/3;margin:clamp(12px,1.3vw,20px) 0 0;justify-self:end;align-self:center;flex-wrap:nowrap}.hero-grid .ctas a:is([href="#selected"],[href="#why"]){display:none}
+.hero-grid .nm-ui{grid-area:1/1/2/-1;justify-self:start;align-self:end;margin:0 0 clamp(16px,2vw,28px) calc(58% + 4px)}.hero-grid .nm-pop{right:auto;left:0}nav.top.has-nm .name{display:none}nav.top .bar-nm{display:flex;align-items:center;gap:0;position:relative}nav.top .bar-nm .nm{width:128px;flex:0 0 auto}nav.top .bar-nm .nm canvas{margin:calc(-100% * 0.0946) 0 calc(-100% * 0.0953) calc(-100% * 0.0704)}nav.top .bar-nm .nm-ui{margin:0 0 0 2px}nav.top .bar-nm .nm-ui .nf{width:30px;height:30px}nav.top .bar-nm .nm-ui .nf svg{width:18px;height:18px}nav.top .bar-nm .nm-pop{left:0;right:auto;top:calc(100% + 16px)}.hero-grid .tagline{grid-row:1/2!important;font-size:clamp(40px,4vw,56px)!important;margin-top:clamp(30px,4vw,60px)!important}.hero-grid .ctas{grid-row:1/2!important;align-self:end!important}.hero-grid .nm{z-index:0}.hero-grid .ctas a{white-space:nowrap}.hero-grid .nm-ui:has(.nm-pop:not([hidden])){z-index:5!important}.hero-grid :is(.ctas,.nm-ui,.kwrow,.col,.nl){position:relative;z-index:2}.hero-grid .tagline{grid-area:2/1/3/3;font-size:clamp(34px,3.3vw,44px);margin:clamp(12px,1.3vw,20px) 0 0}.hero-grid .ctas{grid-area:2/3;margin:clamp(12px,1.3vw,20px) 0 0;justify-self:end;align-self:center;flex-wrap:nowrap}.hero-grid .ctas a:is([href="#selected"],[href="#why"]){display:none}
 .hero-grid .kwrow{grid-area:3/1/4/4;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:16px}.hero-grid .kw{margin:0}
 .hero-grid .col{grid-row:4;min-width:0}.hero-grid .col+.col{grid-column:2}.hero-grid .col:first-of-type{grid-column:1}.hero-grid .nl{grid-area:4/3}
 .sketch{position:relative;margin-top:clamp(128px,11vw,150px)!important}.sketch .cp{position:absolute;left:0;right:0;top:-102px;z-index:3;margin:0;display:grid;grid-template-columns:auto 1fr;align-items:start;gap:4px 20px;pointer-events:none}.sketch .cp>*{pointer-events:auto}.sketch .cp .right{justify-self:end;grid-row:1/3;grid-column:2}.sketch .box{position:absolute;right:0;bottom:calc(100% + 6px);z-index:3;justify-content:flex-end;max-width:calc(100% - 205px);pointer-events:none}.box>*{pointer-events:auto}@media (max-width:1275px){.sketch{margin-top:206px!important}.sketch .cp{top:-158px}.sketch .box{max-width:100%}}.sketch #sk-cap{font-size:14px;line-height:1.5}header.hero:has(.sketch){padding-bottom:0!important}
@@ -837,7 +838,7 @@ html:has(dialog[open]){overflow:hidden}
 </header>
 
 <div class="pen path" data-pen="sky"><svg viewBox="0 -66 1180 122" aria-hidden="true"><path pathLength="1" d="M838 -66C760 -30 620 -22 430 -20S-2 -6 0 52H186V8L164 -4L186 8L212 -6L186 8L190 34L186 8V52H540V45H552V52H566V45H578V52H592V45H604V52H618V45H630V52H892L932 45L968 30L1004 34L1046 6H1084V52H1180"/></svg></div>
-<nav class="me" data-v="about" aria-label="Contact and links"><a class="mail" href="mailto:amy_chen[at]gsd.harvard.edu">amy_chen[at]gsd.harvard.edu</a><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="Amy-X-Chen-Resume.pdf" data-cv>Resume</a><a href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">LinkedIn</a><a href="https://substack.com/@amychenstudio" target="_blank" rel="noopener">Substack</a><a href="https://www.instagram.com/amychenstudio/" target="_blank" rel="noopener">Instagram</a></nav>
+<nav class="me" data-v="about" aria-label="Contact and links"><a class="mail" href="mailto:amy_chen[at]gsd.harvard.edu">amy_chen[at]gsd.harvard.edu</a><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="Amy-X-Chen-Resume.pdf" data-cv>Resume</a><a href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">LinkedIn</a><a href="https://substack.com/@amychenstudio" target="_blank" rel="noopener">Substack</a></nav>
 <div class="subs" data-v="about"></div>
 <section id="about" class="about-top">
   <div class="sh goals-h"><h2>My long-term focus</h2></div>
@@ -1048,7 +1049,6 @@ html:has(dialog[open]){overflow:hidden}
   <div class="sh"><h2>Studio</h2></div>
   <div class="gal" id="gal"></div>
   <ul class="st-aw" aria-label="Awards"><li><span>2023</span>Marion Tournon-Branly Prize and merit scholarship, Fontainebleau Schools</li><li><span>2021</span>National top 10, Art of Science Competition, University of Canterbury</li><li><span>2020</span>First place, photography, New Zealand Bright Awards</li><li><span>2020</span>Gold, Creative Conscience Awards, for The Upcyclers Initiative</li><li><span>2020</span>National finalist and Creative Photo Challenge Award, Toi Wearable Arts</li><li><span>2020</span>Ten best essays, Warren Trust Awards, New Zealand Institute of Architects</li><li><span>2019</span>First place, Global Citizen in the Arts, Yale Model United Nations</li><li><span></span>Third place, Auckland, Showquest on Screen, for film</li></ul>
-  <p class="st-link">More on Instagram: <a href="https://www.instagram.com/amychenstudio/" target="_blank" rel="noopener">@amychenstudio</a></p>
   <div class="st-block"><div class="st-h"><h3>Reading</h3><a href="https://www.goodreads.com/user/show/198079553-amy-chen" target="_blank" rel="noopener">Goodreads</a></div>
     <div class="st-wr"><div><b>The Algorithmic Commons</b><span>My newsletter on AI infrastructure, urban growth and innovation in government.</span></div><div><a class="pill" href="https://algorithmiccommons.substack.com/subscribe" target="_blank" rel="noopener">Subscribe on Substack</a><button type="button" class="tk-l" data-open="essays">All essays</button></div></div>
     <div class="rdg"><div class="rds">
@@ -1080,7 +1080,7 @@ html:has(dialog[open]){overflow:hidden}
 
 <footer>
   <span>Amy X. Chen · amy_chen[at]gsd.harvard.edu · Hero drawing: Château de Fontainebleau, ink, 2023</span>
-  <span class="l"><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="Amy-X-Chen-Resume.pdf" data-cv>Resume</a><a href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">LinkedIn</a><a href="https://substack.com/@amychenstudio" target="_blank" rel="noopener">Substack</a><a href="https://www.instagram.com/amychenstudio/" target="_blank" rel="noopener">Instagram</a></span>
+  <span class="l"><a href="https://github.com/amyxqc" target="_blank" rel="noopener">GitHub</a><a href="Amy-X-Chen-Resume.pdf" data-cv>Resume</a><a href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">LinkedIn</a><a href="https://substack.com/@amychenstudio" target="_blank" rel="noopener">Substack</a></span>
 </footer>
 </div>
 
@@ -1136,7 +1136,7 @@ html:has(dialog[open]){overflow:hidden}
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image"><button class="pill lb-close" type="button">Close</button><img id="lbimg" alt=""><p id="lbcap"></p></div>
 
 <script src="img/hero-ink.js"></script>
-<script src="img/name-ink.js"></script>
+<script src="img/name-ink.js?v=lora3"></script>
 <script>
 const themeBtn=document.querySelector("#theme");
 function showTheme(){const d=isDark();themeBtn.classList.toggle("dark",d);themeBtn.setAttribute("aria-label",d?"Switch to light mode":"Switch to dark mode");themeBtn.title=d?"Light mode":"Dark mode";}
@@ -1499,8 +1499,23 @@ document.addEventListener("click",e=>{if(e.metaKey||e.ctrlKey||e.shiftKey)return
 /* request form. Paste a form-service URL (for example a Formspree endpoint) into endpoint to have
    requests delivered automatically; while it is empty, the form opens a pre-written email instead. */
 const REQUEST={email:"amy_chen[at]gsd.harvard.edu",endpoint:""};
-/* the address is written [at] everywhere on the page; email links get the real one only when clicked */
-document.addEventListener("click",e=>{const x=e.target.closest&&e.target.closest('a[href^="mailto:"][href*="[at]"]');if(!x)return;const h=x.getAttribute("href");x.setAttribute("href",h.replace("[at]","@"));setTimeout(()=>x.setAttribute("href",h),400);},true);
+/* the address is written [at] everywhere on the page. An email link opens a small menu: the email app, Gmail in the browser, or copy the address */
+const MAIL=(()=>{const to=()=>REQUEST.email.replace("[at]","@"),pop=!!HTMLElement.prototype.showPopover;let m,last,on=false;
+ const close=(back)=>{if(!on)return;on=false;if(pop)m.hidePopover();else m.hidden=true;if(back&&last)last.focus();};
+ const make=()=>{m=document.createElement("div");m.className="mailm";m.setAttribute("role","menu");m.setAttribute("aria-label","Email Amy");if(pop)m.popover="manual";else m.hidden=true;document.body.append(m);
+  document.addEventListener("pointerdown",e=>{if(on&&!m.contains(e.target)&&!(last&&last.contains(e.target)))close();},true);
+  document.addEventListener("keydown",e=>{if(on&&e.key==="Escape"){e.preventDefault();e.stopPropagation();close(true);}},true);
+  addEventListener("resize",()=>close());m.addEventListener("click",e=>{const b=e.target.closest("button");if(!b){setTimeout(close,50);return;}
+   const ok=()=>{b.textContent="Copied";setTimeout(()=>close(true),900);};
+   (navigator.clipboard?navigator.clipboard.writeText(to()):Promise.reject()).then(ok,()=>{b.textContent=to();const r=document.createRange();r.selectNodeContents(b);getSelection().removeAllRanges();getSelection().addRange(r);});});};
+ return (a,sub="",body="",up=false)=>{if(!m)make();if(on&&last===a){close(true);return;}last=a;
+  const q=(k,v)=>v?`${k}=${encodeURIComponent(v)}`:"",mq=[q("subject",sub),q("body",body)].filter(Boolean).join("&"),gq=[q("su",sub),q("body",body)].filter(Boolean).map(x=>"&"+x).join("");
+  m.innerHTML=`<a role="menuitem" href="mailto:${to()}${mq?"?"+mq:""}">Open email app</a><a role="menuitem" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to())}${gq}" target="_blank" rel="noopener">Gmail</a><button type="button" role="menuitem">Copy address</button>`;
+  if(pop){if(!on)m.showPopover();}else m.hidden=false;on=true;
+  const r=a.getBoundingClientRect(),w=m.offsetWidth,h=m.offsetHeight;let x=Math.min(Math.max(8,r.left),innerWidth-w-8),y=r.bottom+6;if(up||y+h>innerHeight-8)y=Math.max(8,r.top-h-6);
+  m.style.left=x+"px";m.style.top=y+"px";m.querySelector("a").focus({preventScroll:true});};})();
+document.addEventListener("click",e=>{const x=e.target.closest&&e.target.closest('a[href^="mailto:"][href*="[at]"]');if(!x||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();
+ const u=new URL(x.getAttribute("href").replace("[at]","@"));MAIL(x,u.searchParams.get("subject")||"",u.searchParams.get("body")||"");},true);
 document.addEventListener("click",e=>{if(e.target.closest("[data-rq]")&&!$("#rq").open){$("#rqmsg").textContent="";$("#rqclose").textContent="Cancel";$("#rq").showModal();}});
 $("#rqclose").onclick=()=>$("#rq").close();
 if(!REQUEST.endpoint)$("#rqsend").textContent="Write the email";
@@ -1509,8 +1524,7 @@ $("#rqform").addEventListener("submit",async e=>{e.preventDefault();
   const done=m=>{$("#rqmsg").textContent=m;$("#rqclose").textContent="Close";};
   if(!REQUEST.endpoint){
     const body=`Hello Amy,\n\nI'd like to request the full version of your portfolio.\n\nName: ${v("name")}\nEmail: ${v("email")}\nOrganization: ${v("organization")}\nInterested in: ${v("interest")||"-"}\n`;
-    location.href=`mailto:${REQUEST.email.replace("[at]","@")}?subject=${encodeURIComponent("Portfolio request: "+v("name"))}&body=${encodeURIComponent(body)}`;
-    return done(`Your email app should open with the request written; press send there. If it doesn't, write to ${REQUEST.email}.`);}
+    done(`Choose how to send it. The request is already written. Or write to ${REQUEST.email}.`);return MAIL($("#rqsend"),"Portfolio request: "+v("name"),body,true);}
   $("#rqsend").disabled=true;
   try{const r=await fetch(REQUEST.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});if(!r.ok)throw 0;e.target.reset();done("Thank you. Your request is on its way to me.");}
   catch(_){done(`That didn't go through. Please write to ${REQUEST.email}.`);}
@@ -1521,8 +1535,7 @@ $("#cvclose").onclick=()=>$("#cv").close();
 if(!REQUEST.endpoint)$("#cvsend").textContent="Write the email";
 $("#cvform").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.target),v=k=>(f.get(k)||"").trim();if(v("_gotcha"))return;f.append("source","Resume");
   if(!REQUEST.endpoint){const body=`Hello Amy,\n\nI'm reading your resume.\n\nName: ${v("name")}\nEmail: ${v("email")}\nOrganization: ${v("organization")||"-"}\n`;
-    location.href=`mailto:${REQUEST.email.replace("[at]","@")}?subject=${encodeURIComponent("Reading your resume: "+v("name"))}&body=${encodeURIComponent(body)}`;
-    $("#cvmsg").textContent="Your email app should open with a note written; press send there.";return;}
+    $("#cvmsg").textContent="Choose how to send it. The note is already written.";MAIL($("#cvsend"),"Reading your resume: "+v("name"),body,true);return;}
   $("#cvsend").disabled=true;
   try{const r=await fetch(REQUEST.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});if(!r.ok)throw 0;e.target.reset();$("#cvmsg").textContent="Thank you. I'll be in touch.";}
   catch(_){$("#cvmsg").textContent=`That didn't go through. Please write to ${REQUEST.email}.`;}
