@@ -300,6 +300,7 @@ html.m .kw{gap:6px}html.m .kw li{font-size:13px;padding:6px 11px 6px 9px;gap:6px
 .nm-ui .nf{border:0;background:none;padding:0;width:34px;height:34px;border-radius:50%;color:inherit;cursor:pointer;display:grid;place-items:center;opacity:.6}.nm-ui .nf:hover,.nm-ui .nf[aria-expanded=true]{opacity:1;color:var(--ink);background:var(--surface)}.nm-ui .nf svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
 .nm-pop{position:absolute;right:0;top:calc(100% + 6px);width:min(330px,calc(100vw - 40px));background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.16);padding:15px 18px 12px;text-align:left}.nm-pop[hidden]{display:none}.nm-pop b{font-family:var(--serif);font-weight:500;font-size:19px}.nm-pop p{margin:5px 0 8px;font-size:15px;line-height:1.5;color:var(--muted)}.nm-pop .pz{border:0;background:none;padding:6px 0;font:inherit;font-size:14px;color:var(--accent);cursor:pointer}
 .nm-ui button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tagline.anim{position:relative;--hot:#e0562b;--bg2:var(--bg)}.tagline.anim.live span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.tagline.anim canvas{display:block;position:relative;width:calc(100% * 1.0313);max-width:none;margin:calc(4px - 100% * 0.0666) 0 calc(4px - 100% * 0.0666) calc(-100% * 0.0656);touch-action:pan-y;cursor:crosshair}:root[data-theme="dark"] .tagline.anim{--hot:#ff9a62}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tagline.anim{--hot:#ff9a62}}html.m .hero h1.nm{font-size:42px;line-height:1.05;margin:6px 0 0}
 .mailm{position:fixed;inset:auto;margin:0;z-index:60;min-width:200px;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:2px}.mailm:popover-open{display:flex}.mailm :is(a,button){display:block;text-align:left;font:inherit;font-size:15px;line-height:1.3;color:var(--ink);text-decoration:none;background:none;border:0;padding:10px 12px;border-radius:6px;cursor:pointer;user-select:text}.mailm :is(a,button):is(:hover,:focus-visible){background:var(--surface);outline:none}html.m .mailm :is(a,button){padding:13px 14px;font-size:16px}
 html.m .nm-ui .nf{width:44px;height:44px}html.m .nm-ui{margin:-6px -10px 0 0}html.m .nm-pop{right:10px;top:calc(100% + 2px)}
 .tagline,.kw{position:relative;z-index:1}
@@ -794,7 +795,7 @@ html:has(dialog[open]){overflow:hidden}
 <header class="hero" id="top">
   <div class="hero-grid"><div>
   <h1 class="nm" id="nm"><span>Amy X. Chen</span></h1>
-  <p class="tagline">Building equitable, abundant cities.</p>
+  <p class="tagline"><span>Building equitable, abundant cities.</span></p>
   <div class="kwrow">
   <ul class="kw"><li class="bars"><svg viewBox="0 0 34 24" aria-hidden="true"><rect style="--i:0" x="3.0" y="14" width="5" height="9" rx="1"/><rect style="--i:1" x="10.4" y="6" width="5" height="17" rx="1"/><rect style="--i:2" x="17.8" y="11" width="5" height="12" rx="1"/><rect style="--i:3" x="25.2" y="2" width="5" height="21" rx="1"/></svg>Urban planning</li><li><svg viewBox="0 0 34 24" aria-hidden="true"><path style="--i:0" pathLength="1" d="M4 19L12 7L21 15L30 4"/><circle style="--i:0" cx="4" cy="19" r="2.6"/><circle style="--i:1" cx="12" cy="7" r="2.6"/><circle style="--i:2" cx="21" cy="15" r="2.6"/><circle style="--i:3" cx="30" cy="4" r="2.6"/></svg>Economics</li><li><svg viewBox="0 0 34 24" aria-hidden="true"><path style="--i:0" pathLength="1" d="M6 5L17 12"/><path style="--i:0" pathLength="1" d="M6 19L17 12"/><path style="--i:2" pathLength="1" d="M17 12L28 5"/><path style="--i:2" pathLength="1" d="M17 12L28 19"/><circle style="--i:0" cx="6" cy="5" r="2.5"/><circle style="--i:0" cx="6" cy="19" r="2.5"/><circle style="--i:1" cx="17" cy="12" r="3.4"/><circle style="--i:3" cx="28" cy="5" r="2.5"/><circle style="--i:3" cx="28" cy="19" r="2.5"/></svg>Spatial data &amp; AI</li></ul>
   </div>
@@ -1136,7 +1137,7 @@ html:has(dialog[open]){overflow:hidden}
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image"><button class="pill lb-close" type="button">Close</button><img id="lbimg" alt=""><p id="lbcap"></p></div>
 
 <script src="img/hero-ink.js"></script>
-<script src="img/name-ink.js?v=lora3"></script>
+<script src="img/name-ink.js?v=lora3"></script><script src="img/tag-ink.js?v=1"></script>
 <script>
 const themeBtn=document.querySelector("#theme");
 function showTheme(){const d=isDark();themeBtn.classList.toggle("dark",d);themeBtn.setAttribute("aria-label",d?"Switch to light mode":"Switch to dark mode");themeBtn.title=d?"Light mode":"Dark mode";}
@@ -1930,7 +1931,7 @@ const ask=()=>{if(!t)t=requestAnimationFrame(run);};addEventListener("scroll",as
 /* every "Get in touch" leads to the three ways to reach me, and points them out */
 document.addEventListener("click",e=>{const a=e.target.closest('a[href="#contact"]');if(!a)return;const c=document.getElementById("contact");if(!document.documentElement.classList.contains("m")){e.preventDefault();const y=c.getBoundingClientRect();if(y.top<90||y.bottom>innerHeight-20)c.scrollIntoView({block:"center",behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});}else setTimeout(()=>c.scrollIntoView({block:"center",inline:"nearest",behavior:"instant"}),60);setTimeout(()=>{c.classList.remove("ping");void c.offsetWidth;c.classList.add("ping");},350);});
 </script>
-<script src="img/name-physics.js"></script>
+<script src="img/name-physics.js?v=tag1"></script>
 <script>/* laptops: the animated name lives in the top bar */
 (()=>{const nm=document.getElementById("nm"),bar=document.querySelector("nav.top"),a=bar&&bar.querySelector(".name");if(!nm||!a)return;
 const mark=document.createComment("nm"),box=document.createElement("div"),q=matchMedia("(min-width:980px)");nm.before(mark);box.className="bar-nm";a.after(box);

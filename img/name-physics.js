@@ -1,6 +1,7 @@
 /* The name as twenty small simulations, from physics, the social sciences and music. Change their order in ORDER and how long each holds (seconds) in HOLD.
    One round plays, then the name rests in ink; the header moves on again when it comes back into view. */
-(()=>{const host=document.querySelector("#nm"),MODE="collide";if(!host||!window.NAME||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+(()=>{/* phones animate the tagline; wider screens animate the name */
+const PH=document.documentElement.classList.contains("m")&&!!window.TAG&&!!document.querySelector(".hero .tagline"),host=PH?document.querySelector(".hero .tagline"):document.querySelector("#nm"),NAME=PH?window.TAG:window.NAME,MODE="collide";if(!host||!NAME||matchMedia("(prefers-reduced-motion: reduce)").matches)return;if(PH)host.classList.add("anim");
 const W=900,H=300,SC=(W-90)/NAME.w,OX=45,OY=(H-NAME.h*SC)/2,cv=document.createElement("canvas"),x=cv.getContext("2d"),still=false;cv.setAttribute("aria-hidden","true");host.append(cv);host.classList.add("live");
 const R=Math.random,rn=()=>{let u=1-R(),v=R();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);};let C={};
 const rgb=n=>{const s=document.createElement("i");s.style.color=`var(${n})`;host.append(s);const r=getComputedStyle(s).color.match(/[\d.]+/g).slice(0,3).map(Number);s.remove();return r;};
@@ -248,6 +249,7 @@ cherenkov:"The pen moves faster than its own light can spread, so the light pile
 anneal:"A hot gas cools until its molecules fall into place. Your pointer melts them again.",
 irid:"Thin-film color, like a Morpho butterfly’s wing. Move the pointer to tilt the light.",
 ink:"Pen on paper. Each stroke springs back to where it was drawn."};
+if(PH)for(const k in INFO)INFO[k]=INFO[k].replace(/my name/g,"these words").replace("the whole name","the whole sentence");
 const ui=document.createElement("div");ui.className="nm-ui";ui.setAttribute("role","group");ui.setAttribute("aria-label","Name animation");
 ui.innerHTML='<button type="button" class="nf" aria-expanded="false" aria-controls="nm-pop" aria-label="What am I seeing?"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.500M12 7.600v.1"/></svg></button><div class="nm-pop" id="nm-pop" hidden><b></b><p></p><button type="button" class="pz" aria-label="Pause animations">Pause</button></div>';host.after(ui);const nf=ui.querySelector(".nf"),pop=ui.querySelector(".nm-pop");
 const tell=()=>{pop.querySelector("b").textContent=LABEL[mode];pop.querySelector("p").textContent=INFO[mode];},openPop=v=>{if(v)tell();pop.hidden=!v;nf.setAttribute("aria-expanded",String(v));};nf.onclick=()=>openPop(pop.hidden);
