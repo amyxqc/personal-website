@@ -302,7 +302,7 @@ html.m .kw{gap:6px}html.m .kw li{font-size:13px;padding:6px 11px 6px 9px;gap:6px
 .nm-ui button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media (min-width:761px){nav.top.has-nm .name{display:none}nav.top .bar-nm{display:flex;align-items:center;gap:0;position:relative}nav.top .bar-nm .nm{width:128px;flex:0 0 auto}nav.top .bar-nm .nm canvas{margin:calc(-100% * 0.0946) 0 calc(-100% * 0.0953) calc(-100% * 0.0704)}nav.top .bar-nm .nm-ui{margin:0 0 0 2px}nav.top .bar-nm .nm-ui .nf{width:30px;height:30px}nav.top .bar-nm .nm-ui .nf svg{width:18px;height:18px}nav.top .bar-nm .nm-pop{left:0;right:auto;top:calc(100% + 16px)}}@media (min-width:761px) and (max-width:979px){.hero .tagline{font-size:clamp(40px,5.6vw,52px);line-height:1.1;margin-top:clamp(18px,3vw,34px)}.hero .ctas a:is([href="#selected"],[href="#why"]){display:none}nav.top .bar-nm .nm{width:112px}nav.top .bar-nm .nm-ui .nf{width:26px}}html.m .tagline.anim,html.m .tagline.anim+.nm-ui{max-width:440px}
 .tagline.anim{position:relative;--hot:#e0562b;--bg2:var(--bg)}.tagline.anim.live span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.tagline.anim canvas{display:block;position:relative;width:calc(100% * 1.0313);max-width:none;margin:calc(4px - 100% * 0.0666) 0 calc(4px - 100% * 0.0666) calc(-100% * 0.0656);touch-action:pan-y;cursor:crosshair}:root[data-theme="dark"] .tagline.anim{--hot:#ff9a62}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tagline.anim{--hot:#ff9a62}}html.m .hero h1.nm{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}html.m .hero .tagline.tagline{margin-top:12px}nav.top .name{font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:-.015em}
-.mailm{position:fixed;inset:auto;margin:0;z-index:60;min-width:200px;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:2px}.mailm:popover-open{display:flex}.mailm :is(a,button){display:block;text-align:left;font:inherit;font-size:15px;line-height:1.3;color:var(--ink);text-decoration:none;background:none;border:0;padding:10px 12px;border-radius:6px;cursor:pointer;user-select:text}.mailm :is(a,button):is(:hover,:focus-visible){background:var(--surface);outline:none}html.m .mailm :is(a,button){padding:13px 14px;font-size:16px}
+.mailm{position:fixed;margin:0;z-index:60;min-width:200px;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--rd);box-shadow:0 10px 34px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:2px}.mailm :is(a,button){display:block;text-align:left;font:inherit;font-size:15px;line-height:1.3;color:var(--ink);text-decoration:none;background:none;border:0;padding:10px 12px;border-radius:6px;cursor:pointer;user-select:text}.mailm :is(a,button):is(:hover,:focus-visible){background:var(--surface);outline:none}html.m .mailm :is(a,button){padding:13px 14px;font-size:16px}
 html.m .nm-ui .nf{width:44px;height:44px}html.m .nm-ui{margin:-6px -10px 0 0}html.m .nm-pop{right:10px;top:calc(100% + 2px)}
 .tagline,.kw{position:relative;z-index:1}
 .tagline{margin:10px 0 0;font-size:clamp(30px,3.4vw,42px);line-height:1.15;letter-spacing:-.018em;text-wrap:balance}
@@ -763,7 +763,7 @@ html:has(dialog[open]){overflow:hidden}
 .ask .hp{position:absolute;left:-9999px}
 .ask .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .ask .msg{margin:14px 0 0;color:var(--ink)}
-.ask .msg:empty{display:none}
+.ask .msg:empty{display:none}.ask .msg .mchoose{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.ask .msg .mchoose .pill{padding:9px 16px}
 @media (max-width:759px){
   #pf .book-stage img,#pf .book-stage.single img{height:min(calc(100dvh - 290px),calc((100vw - 32px)*1238/956))}
 }
@@ -1109,8 +1109,8 @@ html:has(dialog[open]){overflow:hidden}
   <p>I'd love to know who's reading. Say hello or follow along, then open the PDF below.</p>
   <div class="acts follow"><a class="pill ghost" href="https://algorithmiccommons.substack.com/subscribe" target="_blank" rel="noopener">Subscribe on Substack</a><a class="pill ghost" href="https://www.linkedin.com/in/amychenstudio/" target="_blank" rel="noopener">Follow on LinkedIn</a></div>
   <form id="cvform">
-    <label>Name<input name="name" autocomplete="name" required maxlength="100"></label>
-    <label>Email<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+    <label>Name<input name="name" autocomplete="name" maxlength="100"></label>
+    <label>Email<input name="email" type="email" autocomplete="email" maxlength="200"></label>
     <label>Organization (optional)<input name="organization" autocomplete="organization" maxlength="150"></label>
     <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="acts"><button class="pill" type="submit" id="cvsend">Say hello</button></div>
@@ -1502,20 +1502,25 @@ document.addEventListener("click",e=>{if(e.metaKey||e.ctrlKey||e.shiftKey)return
    requests delivered automatically; while it is empty, the form opens a pre-written email instead. */
 const REQUEST={email:"amy_chen[at]gsd.harvard.edu",endpoint:""};
 /* the address is written [at] everywhere on the page. An email link opens a small menu: the email app, Gmail in the browser, or copy the address */
-const MAIL=(()=>{const to=()=>REQUEST.email.replace("[at]","@"),pop=!!HTMLElement.prototype.showPopover;let m,last,on=false;
- const close=(back)=>{if(!on)return;on=false;if(pop)m.hidePopover();else m.hidden=true;if(back&&last)last.focus();};
- const make=()=>{m=document.createElement("div");m.className="mailm";m.setAttribute("role","menu");m.setAttribute("aria-label","Email Amy");if(pop)m.popover="manual";else m.hidden=true;document.body.append(m);
-  document.addEventListener("pointerdown",e=>{if(on&&!m.contains(e.target)&&!(last&&last.contains(e.target)))close();},true);
-  document.addEventListener("keydown",e=>{if(on&&e.key==="Escape"){e.preventDefault();e.stopPropagation();close(true);}},true);
-  addEventListener("resize",()=>close());m.addEventListener("click",e=>{const b=e.target.closest("button");if(!b){setTimeout(close,50);return;}
-   const ok=()=>{b.textContent="Copied";setTimeout(()=>close(true),900);};
-   (navigator.clipboard?navigator.clipboard.writeText(to()):Promise.reject()).then(ok,()=>{b.textContent=to();const r=document.createRange();r.selectNodeContents(b);getSelection().removeAllRanges();getSelection().addRange(r);});});};
- return (a,sub="",body="",up=false)=>{if(!m)make();if(on&&last===a){close(true);return;}last=a;
-  const q=(k,v)=>v?`${k}=${encodeURIComponent(v)}`:"",mq=[q("subject",sub),q("body",body)].filter(Boolean).join("&"),gq=[q("su",sub),q("body",body)].filter(Boolean).map(x=>"&"+x).join("");
-  m.innerHTML=`<a role="menuitem" href="mailto:${to()}${mq?"?"+mq:""}">Open email app</a><a role="menuitem" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to())}${gq}" target="_blank" rel="noopener">Gmail</a><button type="button" role="menuitem">Copy address</button>`;
-  if(pop){if(!on)m.showPopover();}else m.hidden=false;on=true;
-  const r=a.getBoundingClientRect(),w=m.offsetWidth,h=m.offsetHeight;let x=Math.min(Math.max(8,r.left),innerWidth-w-8),y=r.bottom+6;if(up||y+h>innerHeight-8)y=Math.max(8,r.top-h-6);
-  m.style.left=x+"px";m.style.top=y+"px";m.querySelector("a").focus({preventScroll:true});};})();
+const MAIL=(()=>{const to=()=>REQUEST.email.replace("[at]","@");let m=null,last=null;
+ const q=(k,v)=>v?`${k}=${encodeURIComponent(v)}`:"";
+ const links=(sub,body,cls="")=>{const mq=[q("subject",sub),q("body",body)].filter(Boolean).join("&"),gq=[q("su",sub),q("body",body)].filter(Boolean).map(x=>"&"+x).join("");
+  return `<a class="${cls}" role="menuitem" href="mailto:${to()}${mq?"?"+mq:""}">Open email app</a><a class="${cls}" role="menuitem" href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to())}${gq}" target="_blank" rel="noopener">Gmail</a><button class="${cls}" type="button" role="menuitem" data-copy>Copy address</button>`;};
+ const copy=(b,done)=>{(navigator.clipboard?navigator.clipboard.writeText(to()):Promise.reject()).then(()=>{b.textContent="Copied";if(done)setTimeout(done,900);},()=>{b.textContent=to();const r=document.createRange();r.selectNodeContents(b);getSelection().removeAllRanges();getSelection().addRange(r);});};
+ const close=back=>{if(!m)return;m.remove();m=null;if(back&&last)last.focus();};
+ document.addEventListener("pointerdown",e=>{if(m&&!m.contains(e.target)&&!(last&&last.contains(e.target)))close();},true);
+ document.addEventListener("keydown",e=>{if(m&&e.key==="Escape"){e.preventDefault();e.stopPropagation();close(true);}},true);
+ addEventListener("resize",()=>close());
+ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-copy]");if(b){e.preventDefault();copy(b,b.closest(".mailm")?()=>close(true):null);return;}if(m&&m.contains(e.target)&&e.target.closest("a"))setTimeout(close,50);});
+ /* a small menu next to a link; inside an open dialog it lives in the dialog, since the rest of the page can't be clicked then */
+ const open=(a,sub="",body="")=>{if(m&&last===a){close(true);return;}close();last=a;
+  m=document.createElement("div");m.className="mailm";m.setAttribute("role","menu");m.setAttribute("aria-label","Email Amy");m.innerHTML=links(sub,body);
+  (a.closest("dialog[open]")||document.body).append(m);
+  const r=a.getBoundingClientRect(),w=m.offsetWidth,h=m.offsetHeight;let x=Math.min(Math.max(8,r.left),innerWidth-w-8),y=r.bottom+6;if(y+h>innerHeight-8)y=Math.max(8,r.top-h-6);
+  m.style.left=x+"px";m.style.top=y+"px";m.querySelector("a").focus({preventScroll:true});};
+ /* the same three choices written into a form's message line */
+ open.inline=(el,sub,body,lead)=>{el.innerHTML=`<span>${lead}</span><span class="mchoose">${links(sub,body,"pill ghost")}</span>`;el.querySelector("a").focus({preventScroll:true});};
+ return open;})();
 document.addEventListener("click",e=>{const x=e.target.closest&&e.target.closest('a[href^="mailto:"][href*="[at]"]');if(!x||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();
  const u=new URL(x.getAttribute("href").replace("[at]","@"));MAIL(x,u.searchParams.get("subject")||"",u.searchParams.get("body")||"");},true);
 document.addEventListener("click",e=>{if(e.target.closest("[data-rq]")&&!$("#rq").open){$("#rqmsg").textContent="";$("#rqclose").textContent="Cancel";$("#rq").showModal();}});
@@ -1526,7 +1531,7 @@ $("#rqform").addEventListener("submit",async e=>{e.preventDefault();
   const done=m=>{$("#rqmsg").textContent=m;$("#rqclose").textContent="Close";};
   if(!REQUEST.endpoint){
     const body=`Hello Amy,\n\nI'd like to request the full version of your portfolio.\n\nName: ${v("name")}\nEmail: ${v("email")}\nOrganization: ${v("organization")}\nInterested in: ${v("interest")||"-"}\n`;
-    done(`Choose how to send it. The request is already written. Or write to ${REQUEST.email}.`);return MAIL($("#rqsend"),"Portfolio request: "+v("name"),body,true);}
+    $("#rqclose").textContent="Close";return MAIL.inline($("#rqmsg"),"Portfolio request: "+v("name"),body,"Your request is written. Send it with:");}
   $("#rqsend").disabled=true;
   try{const r=await fetch(REQUEST.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});if(!r.ok)throw 0;e.target.reset();done("Thank you. Your request is on its way to me.");}
   catch(_){done(`That didn't go through. Please write to ${REQUEST.email}.`);}
@@ -1537,7 +1542,7 @@ $("#cvclose").onclick=()=>$("#cv").close();
 if(!REQUEST.endpoint)$("#cvsend").textContent="Write the email";
 $("#cvform").addEventListener("submit",async e=>{e.preventDefault();const f=new FormData(e.target),v=k=>(f.get(k)||"").trim();if(v("_gotcha"))return;f.append("source","Resume");
   if(!REQUEST.endpoint){const body=`Hello Amy,\n\nI'm reading your resume.\n\nName: ${v("name")}\nEmail: ${v("email")}\nOrganization: ${v("organization")||"-"}\n`;
-    $("#cvmsg").textContent="Choose how to send it. The note is already written.";MAIL($("#cvsend"),"Reading your resume: "+v("name"),body,true);return;}
+    MAIL.inline($("#cvmsg"),"Reading your resume: "+(v("name")||"hello"),body,"Your note is written. Send it with:");return;}
   $("#cvsend").disabled=true;
   try{const r=await fetch(REQUEST.endpoint,{method:"POST",body:f,headers:{Accept:"application/json"}});if(!r.ok)throw 0;e.target.reset();$("#cvmsg").textContent="Thank you. I'll be in touch.";}
   catch(_){$("#cvmsg").textContent=`That didn't go through. Please write to ${REQUEST.email}.`;}
