@@ -326,7 +326,7 @@ html.m .facts3::-webkit-scrollbar,html.m .now::-webkit-scrollbar{display:none}
 html.m .facts3 li,html.m .now li:not(:first-child){flex:0 0 62%;scroll-snap-align:start;font-size:16px}
 html.m .facts3 li{background:var(--surface);border:0;border-radius:16px;padding:16px}
 html.m .hero-grid>div{display:flex;flex-direction:column}html.m .hero .ctas{order:1}html.m .hero :is(.ff,.face,.facts3){order:1}html.m .open-to{order:4}html.m .now-h:not(.ff){order:2}html.m .now{order:3}
-.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.goals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}@media (max-width:1139px){.goals{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .goal{background:var(--surface);border-radius:var(--r);padding:12px 12px 20px;display:flex;flex-direction:column}
 .goal .scene{display:block;width:100%;border:0;padding:0;border-radius:16px;overflow:hidden;background:var(--bg);cursor:pointer;aspect-ratio:16/9}
 .goal canvas{display:block;width:100%;height:100%}
@@ -850,7 +850,9 @@ html:has(dialog[open]){overflow:hidden}
   <article class="goal" data-goal="zero"><button type="button" class="scene" aria-pressed="false" aria-label="Vision Zero: 1.16 million people died on the world’s roads in 2025, according to the WHO. The goal is zero by 2036. Send someone across the street: traffic stops and the count falls to zero"><canvas aria-hidden="true"></canvas></button>
     <h3>Vision Zero</h3><p>Around the world, <b class="yrs">by 2036</b>, no one should die in traffic.</p><div class="ev"><button type="button" data-open="allston-crashes">Vision Zero, One Street at a Time</button><button type="button" data-open="p1-2">Protected bike lanes</button><button type="button" data-open="p2-1">Reimagine Manhattan</button></div></article>
   <article class="goal" data-goal="growth"><button type="button" class="scene" aria-pressed="false" aria-label="Equitable growth: since 1990, GDP per person has grown 8.5 times in developing East Asia and the Pacific and 1.3 times in Sub-Saharan Africa, according to the World Bank. Replay the two lines"><canvas aria-hidden="true"></canvas></button>
-    <h3>Equitable growth</h3><p>Good jobs, resilient industries, healthy workplaces, better education and an end to poverty. Think spatially, even when the answer isn’t spatial.</p><div class="ev"><button type="button" data-open="p3-6">From Reform to Crisis</button><button type="button" data-open="p3-3">Trucks, Fumes, and Groceries</button><button type="button" data-open="p3-7">Flood Smart Assistant</button></div></article>
+    <h3>Equitable growth</h3><p>Good jobs, resilient industries, healthy workplaces, better education and an end to poverty. Think spatially, even when the answer isn’t spatial.</p><div class="ev"><button type="button" data-open="p3-6">From Reform to Crisis</button><button type="button" data-open="p3-3">Trucks, Fumes, and Groceries</button></div></article>
+  <article class="goal" data-goal="decide"><button type="button" class="scene" aria-pressed="false" aria-label="AI for institutional decision-making: one brief, where should the levee go, opens into the questions an assistant should ask back: what do you mean by at risk, is income a fair proxy for need, and this dataset doesn’t exist yet, should we build it. Each leads to new questions and ideas. Open the question"><canvas aria-hidden="true"></canvas></button>
+    <h3>AI for institutional decision-making</h3><p>Rethink how institutions decide, with AI that centers and broadens human judgment: question assumptions, show what the data can’t see and leave the choice to people.</p><div class="ev"><button type="button" data-open="p3-7">Flood Smart Assistant</button><button type="button" data-open="blockparty">Block Party</button><button type="button" data-open="p1-3">Good Friction, Bad Friction</button></div></article>
   </div>
   <div class="sh why-h" id="why"><h2>Why I do this</h2></div>
   <div class="about">
@@ -1574,12 +1576,12 @@ addEventListener("hashchange",fromHash);
 if(!fromHash())show(0);})();
 /* years left until the 2036 goal */
 {const y=2036-new Date().getFullYear(),b=document.querySelector(".goal .yrs");if(b&&y>0)b.textContent=y===10?"in the next decade":`in ${y} year${y===1?"":"s"}`;}
-/* the three goals: small scenes that respond when tapped, hovered or scrolled to */
+/* the four goals: small scenes that respond when tapped, hovered or scrolled to */
 (()=>{const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* GDP per person, PPP, constant 2021 international dollars, 1990 to 2025: East Asia & Pacific excluding high income, Sub-Saharan Africa. World Bank NY.GDP.PCAP.PP.KD, updated 2026-11-11 */
 const GDP=[[2513,2666,2897,3154,3429,3708,3982,4194,4183,4381,4658,4911,5242,5642,6084,6602,7225,8000,8585,9146,9942,10666,11359,12058,12769,13494,14244,15060,15925,16754,16816,17966,18600,19524,20454,21435],[3778,3695,3588,3449,3385,3403,3485,3533,3532,3511,3537,3594,3735,3790,3941,4068,4199,4338,4446,4479,4633,4713,4776,4896,5003,5020,4957,4953,4963,4963,4678,4720,4795,4809,4873,4963]];
 document.querySelectorAll(".goal").forEach(g=>{const b=g.querySelector(".scene"),cv=g.querySelector("canvas"),x=cv.getContext("2d"),kind=g.dataset.goal;
-  let on=false,p=0,v=0,ph=0,raf=0,last=0,seen=false,hov=false,W=320,H=180,c={};
+  let on=false,p=0,v=0,ph=0,raf=0,last=0,seen=false,hov=false,W=320,H=180,c={},fl=[],qn=10,sp=0;const lv=[[],[],[]];
   const cars=[{x:30,v:70,s:1,y:.46},{x:150,v:62,s:1,y:.46},{x:250,v:66,s:-1,y:.66},{x:90,v:74,s:-1,y:.66}];let walk=-1;const bars=[.22,.5,.34,.82,.28,.6,.4].map(a=>({a,h:a,v:0}));
   const look=()=>{const s=getComputedStyle(g),k=n=>s.getPropertyValue(n).trim();c={ink:k("--ink"),mut:k("--muted"),line:k("--line"),acc:k("--accent"),a2:k("--accent2"),bg:k("--bg"),sf:k("--surface2")};};
   function size(){const d=Math.min(2,devicePixelRatio||1),r=cv.getBoundingClientRect();if(!r.width)return;cv.width=r.width*d;cv.height=r.height*d;x.setTransform(cv.width/W,0,0,cv.height/H,0,0);look();draw();}
@@ -1597,6 +1599,18 @@ document.querySelectorAll(".goal").forEach(g=>{const b=g.querySelector(".scene")
       cars.forEach(k=>{rr(k.x-15,H*k.y-9,30,18,6,k.stop?c.acc:c.mut);rr(k.x+(k.s>0?3:-9),H*k.y-6,6,12,2,c.bg);});
       if(walk>=0){const y=150-walk*112;x.fillStyle=c.ink;x.beginPath();x.arc(161,y-9,5,0,7);x.fill();ln(161,y-3,161,y+8,4,c.ink);const s=Math.sin(ph*.25)*5;ln(161,y+8,161-s,y+16,3.4,c.ink);ln(161,y+8,161+s,y+16,3.4,c.ink);}
       const q=Math.max(0,Math.min(1,p)),n=q>.985?0:Math.round(116*(1-q))*1e4,yl=2036-new Date().getFullYear();x.fillStyle=q>.985?c.acc:c.ink;x.font='500 28px Lora,Georgia,serif';x.textAlign="left";x.fillText(n.toLocaleString("en-US"),16,35);x.font='12.5px "Inter Tight",sans-serif';x.fillStyle=c.mut;x.fillText(q<.04?"road deaths, 2025 (WHO)":"road deaths: the goal",17,54);if(yl>0){x.textAlign="right";x.fillStyle=c.acc;x.font='500 28px Lora,Georgia,serif';x.fillText(yl+(yl===1?" year":" years"),W-16,35);x.font='12.5px "Inter Tight",sans-serif';x.fillStyle=c.mut;x.fillText("to reach zero",W-17,54);}x.textAlign="left";
+    }else if(kind==="decide"){const q=Math.max(0,Math.min(1,p)),e=q*q*(3-2*q),cl=v=>Math.max(0,Math.min(1,v)),Q=["What do you mean by \u201cat risk\u201d?","Income as a proxy for need?","No dataset yet: build one?"],C=[c.acc,"#e0693f",c.a2],n=q<.04?1:q<.97?Math.min(10,1+Math.round(9*cl(e*1.15))):qn;
+      x.textAlign="left";x.fillStyle=n>=10?c.acc:c.ink;x.font='500 28px Lora,Georgia,serif';x.fillText(n+(n>1?" questions":" question"),16,35);x.font='12.5px "Inter Tight",sans-serif';x.fillStyle=c.mut;
+      x.fillText(q<.04?"the brief: where should the levee go?":q<.97?"assumptions opened, new questions in":"and counting: each answer raises new ones",17,54);
+      const rx=26,ry=116;Q.forEach((t,k)=>{const a=cl((e-k*.12)/.45),y=80+k*36;if(!a)return;x.globalAlpha=a;x.font='11.5px "Inter Tight",sans-serif';const w=x.measureText(t).width,cx=60,ce=cx+w+16;
+        x.strokeStyle=c.line;x.lineWidth=1.6;x.beginPath();x.moveTo(rx+9,ry);x.bezierCurveTo(rx+26,ry,cx-16,y,cx,y);x.stroke();
+        rr(cx,y-11,w+16,22,11,c.bg);x.strokeStyle=C[k];x.lineWidth=1.3;x.beginPath();x.roundRect(cx,y-11,w+16,22,11);x.stroke();x.fillStyle=C[k];x.fillText(t,cx+8,y+4);
+        for(let m=0;m<2;m++){const u=cl((e-.42-k*.08-m*.07)/.32);if(!u)continue;const lx=ce+18+m*24,ly=y+(m?9:-9)+Math.sin(ph*.04+k*2+m)*1.6;lv[k][m]=[lx,ly];x.globalAlpha=u*a;
+          x.strokeStyle=c.line;x.lineWidth=1.2;x.beginPath();x.moveTo(ce,y);x.lineTo(lx-6,ly);x.stroke();x.fillStyle=c.bg;x.beginPath();x.arc(lx,ly,6.5,0,7);x.fill();x.strokeStyle=C[k];x.stroke();
+          x.fillStyle=C[k];x.font='600 9px "Inter Tight",sans-serif';x.textAlign="center";x.fillText(k===2?"+":"?",lx,ly+3.2);x.textAlign="left";}
+        x.globalAlpha=1;});
+      fl.forEach(f=>{const o=lv[f.k][f.m];if(!o)return;const d=f.t*.03,fx=o[0]+Math.cos(f.a)*d,fy=o[1]+Math.sin(f.a)*d,al=f.t<250?f.t/250:Math.max(0,1-(f.t-250)/1700),C2=[c.acc,"#e0693f",c.a2][f.k];x.globalAlpha=al*.6;x.strokeStyle=c.line;x.lineWidth=1;x.beginPath();x.moveTo(o[0],o[1]);x.lineTo(fx,fy);x.stroke();x.globalAlpha=al;x.fillStyle=c.bg;x.beginPath();x.arc(fx,fy,5,0,7);x.fill();x.strokeStyle=C2;x.lineWidth=1.2;x.stroke();x.fillStyle=C2;x.font='600 7.5px "Inter Tight",sans-serif';x.textAlign="center";x.fillText(f.k===2?"+":"?",fx,fy+2.7);x.textAlign="left";x.globalAlpha=1;});
+      x.fillStyle=c.ink;x.beginPath();x.arc(rx,ry,9,0,7);x.fill();x.fillStyle=c.bg;x.font='600 12px "Inter Tight",sans-serif';x.textAlign="center";x.fillText("?",rx,ry+4.2);x.textAlign="left";
     }else{const q=Math.max(0,Math.min(1,p)),X0=20,X1=218,Y0=152,Y1=48,top=GDP[0][35],px=i=>X0+(X1-X0)*i/35,py=v=>Y0-(Y0-Y1)*v/top,rest=q<.03;x.textAlign="left";x.font='12px "Inter Tight",sans-serif';x.fillStyle=c.mut;x.fillText("GDP per person since 1990 (World Bank)",X0,26);ln(X0,Y0,X1,Y0,1.2,c.line);x.lineJoin="round";
       GDP.forEach((d,k)=>{const col=k?"#e0693f":c.acc,line=(to,s,w)=>{x.strokeStyle=s;x.lineWidth=w;x.beginPath();const n=Math.floor(to);for(let i=0;i<=n;i++)i?x.lineTo(px(i),py(d[i])):x.moveTo(px(0),py(d[0]));if(to>n&&n<35)x.lineTo(px(to),py(d[n]+(d[n+1]-d[n])*(to-n)));x.stroke();};
         line(35,rest?c.mut:c.line,2.4);const to=rest?0:35*q;if(!rest)line(to,col,3);const n=Math.min(34,Math.floor(to)),v=rest?d[35]:d[n]+(d[n+1]-d[n])*(to-n),i=rest?35:to;x.fillStyle=rest?c.mut:col;x.beginPath();x.arc(px(i),py(v),4,0,7);x.fill();
@@ -1605,8 +1619,9 @@ document.querySelectorAll(".goal").forEach(g=>{const b=g.querySelector(".scene")
     if(kind==="zero"){if(tgt&&walk<0)walk=0;if(walk>=0){const clear=cars.every(k=>Math.abs(k.x-161)>24||k.y>1);if(walk>0||clear)walk+=dt/2600;if(walk>1.02)walk=tgt?-.001:-1;if(walk<0)walk=-1;}
       cars.forEach(k=>{const near=k.s>0?161-34-k.x:k.x-(161+34),want=walk>=0&&near>-2&&near<80?Math.max(0,(near-2)*1.4):k.v;k.cv=(k.cv??k.v)+((Math.min(want,k.v))-(k.cv??k.v))*Math.min(1,dt/110);k.stop=k.cv<8;
         const ah=cars.find(o=>o!==k&&o.s===k.s&&(o.x-k.x)*k.s>0&&(o.x-k.x)*k.s<42);if(ah)k.cv=Math.min(k.cv,ah.cv??ah.v);k.x+=k.s*k.cv*dt/1000;if(k.x>W+24)k.x=-24;if(k.x<-24)k.x=W+24;});}
+    if(kind==="decide"){fl.forEach(f=>f.t+=dt);fl=fl.filter(f=>f.t<1950);if(tgt&&p>.97){sp+=dt;if(sp>760){sp=0;qn++;fl.push({k:Math.floor(Math.random()*3),m:Math.random()<.5?0:1,a:-1.3+Math.random()*1.9,t:0});}}else if(!tgt&&p<.5){qn=10;sp=0;}}
     if(kind==="growth")bars.forEach((k,i)=>{const want=Math.max(k.a,p>.02?(.72*Math.min(1,p*1.2)+(k.a>.72?k.a-.72:0)):k.a);k.v+=((want-k.h)*(60-i*4)-k.v*8)*dt/1000;k.h+=k.v*dt/1000;});
-    draw();const busy=tgt||p>.012&&kind==="energy"||kind==="zero"&&(walk>=0||p>.012)||Math.abs(v)>.003||bars.some(k=>Math.abs(k.v)>.003);if(busy)go();else last=0;}
+    draw();const busy=tgt||kind==="decide"&&fl.length>0||p>.012&&kind==="energy"||kind==="zero"&&(walk>=0||p>.012)||Math.abs(v)>.003||bars.some(k=>Math.abs(k.v)>.003);if(busy)go();else last=0;}
   const go=()=>{if(!raf&&!still)raf=requestAnimationFrame(frame);};
   b.onclick=()=>{on=!on;b.setAttribute("aria-pressed",String(on));if(still){p=on?1:0;bars.forEach(k=>k.h=Math.max(k.a,on?.72:k.a));draw();}go();};
   b.addEventListener("pointerenter",e=>{if(e.pointerType==="mouse"){hov=true;go();}});b.addEventListener("pointerleave",()=>{hov=false;go();});
